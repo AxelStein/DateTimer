@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_add_timer"
+        android:icon="@drawable/icon_add"
+        android:title="@string/action_add_timer"
+        app:showAsAction="always" />
+
+    <item
+        android:icon="@drawable/icon_filter"
+        android:title="@string/action_filter_timers"
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/menu_show_completed_timers"
+                android:checkable="true"
+                android:title="@string/action_show_completed_timers" />
+            <item android:title="@string/action_sort">
+                <menu>
+                    <item
+                        android:id="@+id/menu_sort_timers_title"
+                        android:title="@string/action_sort_title" />
+                    <item
+                        android:id="@+id/menu_sort_timers_date"
+                        android:title="@string/action_sort_date" />
+                </menu>
+            </item>
+        </menu>
+
+    </item>
+</menu>

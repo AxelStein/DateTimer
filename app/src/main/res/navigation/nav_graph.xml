@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/fragment_timers">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.axel_stein.date_timer.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/fragment_timers"
+        android:name="com.axel_stein.date_timer.FragmentTimers"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_timers">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_add_timer"
+            app:destination="@id/fragment_edit_timer">
+            <argument
+                android:name="id"
+                android:defaultValue="0L"
+                app:argType="long"/>
+        </action>
+        <action
+            android:id="@+id/action_edit_timer"
+            app:destination="@id/fragment_edit_timer" />
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.axel_stein.date_timer.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+        android:id="@+id/fragment_edit_timer"
+        android:name="com.axel_stein.date_timer.FragmentEditTimer"
+        android:label=""
+        tools:layout="@layout/fragment_edit_timer">
+        <argument
+            android:name="id"
+            app:argType="long" />
     </fragment>
+
 </navigation>
