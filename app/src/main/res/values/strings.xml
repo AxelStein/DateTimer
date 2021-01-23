@@ -10,4 +10,6 @@
     <string name="action_sort_date">By date</string>
     <string name="action_pause">Pause</string>
     <string name="action_delete">Delete</string>
+    <string name="action_save">Save</string>
+    <string name="no_timers">No timers</string>
 </resources>

@@ -19,22 +19,31 @@
         android:lines="1"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/timer"
-        app:layout_constraintEnd_toStartOf="@+id/button_pause"
+        app:layout_constraintBottom_toTopOf="@+id/count_down"
+        app:layout_constraintEnd_toStartOf="@+id/barrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Birthday"/>
 
-    <TextView
-        android:id="@+id/timer"
+    <com.axel_stein.date_timer.ui.timers.CountDownView
+        android:id="@+id/count_down"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/title"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="2 years 45 days 22:10:35"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="button_pause, icon_done"/>
 
     <ImageButton
         android:id="@+id/button_pause"
@@ -47,5 +56,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/icon_done"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="center"
+        android:src="@drawable/icon_done"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?android:attr/textColorSecondary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

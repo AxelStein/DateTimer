@@ -1,9 +1,10 @@
-package com.axel_stein.date_timer
+package com.axel_stein.date_timer.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
