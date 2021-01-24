@@ -13,6 +13,8 @@
     <string name="description_pause">Пауза</string>
     <string name="dialog_msg_delete_timer">Таймер будет удален навсегда.</string>
     <string name="dialog_title_confirm">Подтвердите действие</string>
+    <string name="error_date_time_earlier">Дата и время должны быть раньше текущего момента</string>
+    <string name="error_date_time_later">Дата и время должны быть позже текущего момента</string>
     <string name="error_deleting">Ошибка удаления</string>
     <string name="error_loading">Ошибка загрузки</string>
     <string name="error_saving">Ошибка сохранения</string>

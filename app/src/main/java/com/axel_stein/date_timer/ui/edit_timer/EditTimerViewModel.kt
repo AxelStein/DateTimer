@@ -24,6 +24,9 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
     private val errorTitleEmpty = MutableLiveData<Boolean>()
     val errorTitleEmptyLiveData: LiveData<Boolean> = errorTitleEmpty
 
+    private val errorDateTime = MutableLiveData<Int>()
+    val errorDateTimeLiveData: LiveData<Int> = errorDateTime
+
     private val showMessage = MutableLiveData<Event<Int>>()
     val showMessageLiveData: LiveData<Event<Int>> = showMessage
 
@@ -49,6 +52,7 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
         date.monthOfYear = month
         date.dayOfMonth = dayOfMonth
         timer.dateTime = date.toDateTime()
+        checkDateTime()
     }
 
     fun setTime(hourOfDay: Int, minuteOfHour: Int) {
@@ -57,6 +61,26 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
         date.hourOfDay = hourOfDay
         date.minuteOfHour = minuteOfHour
         timer.dateTime = date.toDateTime()
+        checkDateTime()
+    }
+
+    private fun checkDateTime() {
+        val timer = timerData.get()
+        val dateTime = timer.dateTime
+        val ms = System.currentTimeMillis()
+        if (timer.countDown) {
+            if (dateTime.millis < ms) {
+                errorDateTime.value = R.string.error_date_time_later
+            } else {
+                errorDateTime.value = null
+            }
+        } else {
+            if (dateTime.millis > ms) {
+                errorDateTime.value = R.string.error_date_time_earlier
+            } else {
+                errorDateTime.value = null
+            }
+        }
     }
 
     fun getCurrentDateTime() = timerData.value?.dateTime ?: DateTime()
@@ -72,6 +96,7 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
     fun setCountDown(value: Boolean) {
         timerData.getOrDefault(Timer()).countDown = value
         state["count_down"] = value
+        checkDateTime()
     }
 
     private fun loadData() {
@@ -88,8 +113,10 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
     }
 
     fun save() {
+        checkDateTime()
         when {
-            timerData.getOrDefault(Timer()).title.isBlank() -> errorTitleEmpty.value = true
+            timerData.get().title.isBlank() -> errorTitleEmpty.value = true
+            errorDateTime.value != null -> {}
             else -> {
                 Completable.fromAction {
                     val timer = timerData.get()

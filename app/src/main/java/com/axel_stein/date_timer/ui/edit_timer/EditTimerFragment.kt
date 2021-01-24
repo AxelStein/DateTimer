@@ -64,6 +64,10 @@ class EditTimerFragment : Fragment(), ConfirmDialog.OnConfirmListener {
                 Snackbar.make(view, msg, LENGTH_SHORT).show()
             }
         })
+        viewModel.errorDateTimeLiveData.observe(viewLifecycleOwner, {
+            binding.errorDateTime.setVisible(it != null)
+            if (it != null) binding.errorDateTime.setText(it)
+        })
         viewModel.actionFinishLiveData.observe(viewLifecycleOwner, {
             findNavController().navigateUp()
         })
