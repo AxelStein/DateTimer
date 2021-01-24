@@ -24,4 +24,6 @@
     <string name="dialog_title_confirm">Confirm action</string>
     <string name="action_cancel">Cancel</string>
     <string name="dialog_msg_delete_timer">Timer will be permanently deleted.</string>
+    <string name="msg_timer_saved">Timer saved</string>
+    <string name="msg_timer_deleted">Timer deleted</string>
 </resources>

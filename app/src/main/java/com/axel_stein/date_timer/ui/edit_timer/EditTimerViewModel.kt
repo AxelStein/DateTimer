@@ -98,6 +98,7 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
                         .withMillisOfSecond(0)
                     dao.upsert(timer)
                 }.subscribeOn(io()).subscribe({
+                    showMessage.postValue(Event(R.string.msg_timer_saved))
                     actionFinish.postValue(Event())
                 }, {
                     it.printStackTrace()
@@ -111,7 +112,10 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
         if (id != 0L) dao.deleteById(id)
             .subscribeOn(io())
             .subscribe(
-                { actionFinish.postValue(Event()) },
+                {
+                    showMessage.postValue(Event(R.string.msg_timer_deleted))
+                    actionFinish.postValue(Event())
+                },
                 {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error_deleting))
