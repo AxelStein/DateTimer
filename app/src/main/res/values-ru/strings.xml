@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="action_add_timer">Добавить таймер</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_filter_timers">Фильтр</string>
+    <string name="action_save">Сохранить</string>
+    <string name="action_show_completed_timers">Показать завершенные таймеры</string>
+    <string name="action_sort">Сортировать</string>
+    <string name="action_sort_date">По дате</string>
+    <string name="action_sort_title">По названию</string>
+    <string name="count_down">Обратный отсчет</string>
+    <string name="description_pause">Пауза</string>
+    <string name="dialog_msg_delete_timer">Таймер будет удален навсегда.</string>
+    <string name="dialog_title_confirm">Подтвердите действие</string>
+    <string name="error_deleting">Ошибка удаления</string>
+    <string name="error_loading">Ошибка загрузки</string>
+    <string name="error_saving">Ошибка сохранения</string>
+    <string name="error_title_empty">Пожалуйста, заполните это поле</string>
+    <string name="hint_title">Название</string>
+    <string name="msg_timer_deleted">Таймер удален</string>
+    <string name="msg_timer_saved">Таймер сохранен</string>
+    <string name="no_timers">Нет таймеров</string>
+    <string name="suffix_day">д </string>
+    <string name="suffix_month">мес </string>
+    <string name="suffix_week">нед </string>
+    <string name="suffix_year">г </string>
+</resources>
