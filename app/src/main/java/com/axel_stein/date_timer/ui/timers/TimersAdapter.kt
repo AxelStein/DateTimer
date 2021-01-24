@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.databinding.ItemTimerBinding
-import com.axel_stein.date_timer.utils.formatDateTime
 import com.axel_stein.date_timer.utils.setVisible
 
 
@@ -23,7 +22,6 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
             return a.id == b.id &&
                 a.title == b.title &&
                 a.paused == b.paused &&
-                a.completed == b.completed &&
                 a.dateTime == b.dateTime
         }
     }
@@ -50,19 +48,25 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
         val binding = ItemTimerBinding.bind(view)
 
         fun setItem(item: Timer) {
+            binding.icon.setImageResource(
+                if (item.countDown) R.drawable.icon_count_down
+                else R.drawable.icon_count_up
+            )
             binding.title.text = item.title
-            if (item.paused || item.completed) {
+            if (item.paused) {
                 binding.timer.setDateTime(null)
-                binding.timer.text = formatDateTime(itemView.context, item.dateTime)
             } else {
                 binding.timer.setDateTime(item.dateTime)
             }
-            binding.buttonPause.setVisible(!item.completed)
+            binding.timer.setCountDown(item.countDown)
+            binding.timer.onCountDownEnd = {
+                binding.buttonPause.setVisible(false)
+                binding.iconDone.setVisible(true)
+            }
             binding.buttonPause.setImageResource(
                 if (item.paused) R.drawable.icon_resume
                 else R.drawable.icon_pause
             )
-            binding.iconDone.setVisible(item.completed)
         }
     }
 }

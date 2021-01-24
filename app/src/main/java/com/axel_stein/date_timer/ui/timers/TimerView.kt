@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import com.axel_stein.date_timer.R
+import com.axel_stein.date_timer.utils.formatDateTime
 import org.joda.time.DateTime
 import org.joda.time.MutablePeriod
 import org.joda.time.format.PeriodFormatterBuilder
@@ -44,10 +45,16 @@ class TimerView : AppCompatTextView {
             }
         }
     }
+    private var countDown = true
+    var onCountDownEnd: (() -> Unit)? = null
 
     fun setDateTime(dateTime: DateTime?) {
         this.dateTime = dateTime
         updateRunning()
+    }
+
+    fun setCountDown(value: Boolean) {
+        countDown = value
     }
 
     override fun onDetachedFromWindow() {
@@ -79,9 +86,21 @@ class TimerView : AppCompatTextView {
         }
     }
 
+    // binding.timer.text = formatDateTime(itemView.context, item.dateTime)
     private fun updateText() {
         dateTime?.let {
-            period.setPeriod(System.currentTimeMillis(), it.millis)
+            val ms = System.currentTimeMillis()
+            if (countDown) {
+                period.setPeriod(ms, it.millis)
+                if (ms >= it.millis) {
+                    running = false
+                    onCountDownEnd?.invoke()
+                    text = formatDateTime(context, it)
+                    return
+                }
+            } else {
+                period.setPeriod(it.millis, ms)
+            }
             text = periodFormatter.print(period)
         }
     }

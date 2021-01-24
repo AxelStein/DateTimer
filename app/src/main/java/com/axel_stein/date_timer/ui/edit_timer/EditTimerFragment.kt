@@ -30,13 +30,13 @@ class EditTimerFragment : Fragment() {
         binding.switchCountDown.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setCountDown(isChecked)
         }
+        binding.switchCountDown.setVisible(id == 0L)
         binding.btnDate.setOnClickListener {
             showDatePicker(requireContext(), viewModel.getCurrentDateTime()) { year, month, dayOfMonth ->
                 viewModel.setDate(year, month, dayOfMonth)
                 binding.btnDate.text = formatDate(requireContext(), true, year, month, dayOfMonth)
             }
         }
-
         binding.btnTime.setOnClickListener {
             showTimePicker(requireContext(), viewModel.getCurrentDateTime()) { hourOfDay, minuteOfHour ->
                 viewModel.setTime(hourOfDay, minuteOfHour)

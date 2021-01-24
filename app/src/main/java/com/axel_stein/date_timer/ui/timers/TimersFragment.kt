@@ -9,6 +9,8 @@ import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.databinding.FragmentTimersBinding
 import com.axel_stein.date_timer.utils.LinearLayoutManagerWrapper
 import com.axel_stein.date_timer.utils.setVisible
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
 class TimersFragment : Fragment() {
     private lateinit var binding: FragmentTimersBinding
@@ -41,6 +43,12 @@ class TimersFragment : Fragment() {
         viewModel.itemsLiveData.observe(viewLifecycleOwner, {
             listAdapter.submitList(it)
             binding.noTimers.setVisible(it.isNullOrEmpty())
+        })
+        viewModel.showMessageLiveData.observe(viewLifecycleOwner, {
+            val msg = it.getContent()
+            if (msg != null) {
+                Snackbar.make(view, msg, LENGTH_SHORT).show()
+            }
         })
     }
 

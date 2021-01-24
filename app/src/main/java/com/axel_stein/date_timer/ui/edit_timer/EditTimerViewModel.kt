@@ -92,7 +92,11 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
             timerData.getOrDefault(Timer()).title.isBlank() -> errorTitleEmpty.value = true
             else -> {
                 Completable.fromAction {
-                    dao.upsert(timerData.get())
+                    val timer = timerData.get()
+                    timer.dateTime = timer.dateTime
+                        .withSecondOfMinute(0)
+                        .withMillisOfSecond(0)
+                    dao.upsert(timer)
                 }.subscribeOn(io()).subscribe({
                     actionFinish.postValue(Event())
                 }, {
