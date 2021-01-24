@@ -19,15 +19,15 @@
         android:lines="1"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/count_down"
+        app:layout_constraintBottom_toTopOf="@+id/timer"
         app:layout_constraintEnd_toStartOf="@+id/barrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Birthday"/>
 
-    <com.axel_stein.date_timer.ui.timers.CountDownView
-        android:id="@+id/count_down"
+    <com.axel_stein.date_timer.ui.timers.TimerView
+        android:id="@+id/timer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"

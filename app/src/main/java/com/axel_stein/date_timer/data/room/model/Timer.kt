@@ -8,14 +8,15 @@ import org.joda.time.DateTime
 @Entity(tableName = "timers")
 data class Timer(
     var title: String,
+    var paused: Boolean = false,
+    var completed: Boolean = false,
+
+    @ColumnInfo(name = "count_down")
+    var countDown: Boolean = true,
 
     @ColumnInfo(name = "date_time")
     var dateTime: DateTime,
-
-    var paused: Boolean = false,
-
-    var completed: Boolean = false
 ) {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     var id = 0L
 }

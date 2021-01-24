@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.databinding.FragmentTimersBinding
 import com.axel_stein.date_timer.utils.LinearLayoutManagerWrapper
+import com.axel_stein.date_timer.utils.setVisible
 
 class FragmentTimers : Fragment() {
     private lateinit var binding: FragmentTimersBinding
@@ -39,6 +40,7 @@ class FragmentTimers : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.itemsLiveData.observe(viewLifecycleOwner, {
             listAdapter.submitList(it)
+            binding.noTimers.setVisible(it.isNullOrEmpty())
         })
     }
 

@@ -8,7 +8,7 @@ import org.joda.time.DateTime
 import org.joda.time.MutablePeriod
 import org.joda.time.format.PeriodFormatterBuilder
 
-class CountDownView : AppCompatTextView {
+class TimerView : AppCompatTextView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
@@ -44,6 +44,11 @@ class CountDownView : AppCompatTextView {
         }
     }
 
+    fun setDateTime(dateTime: DateTime?) {
+        this.dateTime = dateTime
+        updateRunning()
+    }
+
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         visible = false
@@ -73,14 +78,9 @@ class CountDownView : AppCompatTextView {
         }
     }
 
-    fun setDateTime(dateTime: DateTime?) {
-        this.dateTime = dateTime
-        updateRunning()
-    }
-
     private fun updateText() {
-        if (dateTime != null) {
-            period.setPeriod(System.currentTimeMillis(), dateTime?.millis ?: 0)
+        dateTime?.let {
+            period.setPeriod(System.currentTimeMillis(), it.millis)
             text = periodFormatter.print(period)
         }
     }

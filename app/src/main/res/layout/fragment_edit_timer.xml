@@ -6,11 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_count_down"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:checked="true"
+        android:paddingStart="16dp"
+        android:paddingEnd="12dp"
+        android:text="@string/count_down"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/btn_date"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:drawablePadding="16dp"
@@ -25,14 +38,13 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_time"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_count_down"
         tools:text="Thu, December 10" />
 
     <TextView
         android:id="@+id/btn_time"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:drawablePadding="16dp"
@@ -46,7 +58,7 @@
         app:drawableTint="?android:attr/textColorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_date"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_date"
         tools:text="12:30" />
 
     <com.google.android.material.textfield.TextInputLayout

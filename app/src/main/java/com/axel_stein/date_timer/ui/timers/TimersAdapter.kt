@@ -2,8 +2,6 @@ package com.axel_stein.date_timer.ui.timers
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.databinding.ItemTimerBinding
+import com.axel_stein.date_timer.utils.setVisible
 import org.joda.time.format.DateTimeFormat
 
 
@@ -53,17 +52,17 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
         fun setItem(item: Timer) {
             binding.title.text = item.title
             if (item.paused || item.completed) {
-                binding.countDown.setDateTime(null)
-                binding.countDown.text = item.dateTime.toString(DateTimeFormat.mediumDateTime())
+                binding.timer.setDateTime(null)
+                binding.timer.text = item.dateTime.toString(DateTimeFormat.mediumDateTime())
             } else {
-                binding.countDown.setDateTime(item.dateTime)
+                binding.timer.setDateTime(item.dateTime)
             }
-            binding.buttonPause.visibility = if (item.completed) GONE else VISIBLE
+            binding.buttonPause.setVisible(!item.completed)
             binding.buttonPause.setImageResource(
                 if (item.paused) R.drawable.icon_resume
                 else R.drawable.icon_pause
             )
-            binding.iconDone.visibility = if (item.completed) VISIBLE else GONE
+            binding.iconDone.setVisible(item.completed)
         }
     }
 }
