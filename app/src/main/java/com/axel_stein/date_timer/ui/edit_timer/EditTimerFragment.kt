@@ -7,11 +7,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.databinding.FragmentEditTimerBinding
+import com.axel_stein.date_timer.ui.dialogs.ConfirmDialog
 import com.axel_stein.date_timer.utils.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
-class EditTimerFragment : Fragment() {
+class EditTimerFragment : Fragment(), ConfirmDialog.OnConfirmListener {
     private val viewModel: EditTimerViewModel by viewModels { EditTimerFactory(this, id) }
     private lateinit var binding: FragmentEditTimerBinding
     private var id = 0L
@@ -82,10 +83,19 @@ class EditTimerFragment : Fragment() {
                 true
             }
             R.id.menu_delete_timer -> {
-                viewModel.delete()
+                ConfirmDialog.Builder().from(this)
+                    .title(R.string.dialog_title_confirm)
+                    .message(R.string.dialog_msg_delete_timer)
+                    .positiveBtnText(R.string.action_delete)
+                    .negativeBtnText(R.string.action_cancel)
+                    .show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onConfirm(tag: String?) {
+        viewModel.delete()
     }
 }

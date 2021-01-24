@@ -21,4 +21,7 @@
     <string name="suffix_month">&#160;mth&#160;</string>
     <string name="suffix_week">&#160;wk&#160;</string>
     <string name="suffix_day">&#160;d&#160;</string>
+    <string name="dialog_title_confirm">Confirm action</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="dialog_msg_delete_timer">Timer will be permanently deleted.</string>
 </resources>
