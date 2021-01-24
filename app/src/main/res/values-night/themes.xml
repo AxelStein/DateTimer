@@ -7,4 +7,5 @@
         <item name="android:windowBackground">@color/color_bg_night</item>
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
+    <style name="Theme.DateTimer.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>
