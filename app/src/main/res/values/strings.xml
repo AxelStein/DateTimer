@@ -13,4 +13,12 @@
     <string name="action_save">Save</string>
     <string name="no_timers">No timers</string>
     <string name="count_down">Count down</string>
+    <string name="error_saving">Error saving</string>
+    <string name="error_deleting">Error deleting</string>
+    <string name="error_loading">Error loading</string>
+    <string name="error_title_empty">Title is empty</string>
+    <string name="suffix_year">&#160;y&#160;</string>
+    <string name="suffix_month">&#160;mth&#160;</string>
+    <string name="suffix_week">&#160;wk&#160;</string>
+    <string name="suffix_day">&#160;d&#160;</string>
 </resources>

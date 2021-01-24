@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.databinding.ItemTimerBinding
+import com.axel_stein.date_timer.utils.formatDateTime
 import com.axel_stein.date_timer.utils.setVisible
-import org.joda.time.format.DateTimeFormat
 
 
 class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
@@ -53,7 +53,7 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
             binding.title.text = item.title
             if (item.paused || item.completed) {
                 binding.timer.setDateTime(null)
-                binding.timer.text = item.dateTime.toString(DateTimeFormat.mediumDateTime())
+                binding.timer.text = formatDateTime(itemView.context, item.dateTime)
             } else {
                 binding.timer.setDateTime(item.dateTime)
             }

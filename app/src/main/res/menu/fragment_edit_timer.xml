@@ -9,13 +9,6 @@
         android:title="@string/action_save"
         app:showAsAction="always" />
     <item
-        android:id="@+id/menu_pause_timer"
-        android:icon="@drawable/icon_pause"
-        android:title="@string/action_pause"
-        android:visible="false"
-        app:showAsAction="always"
-        tools:visible="true" />
-    <item
         android:id="@+id/menu_delete_timer"
         android:icon="@drawable/icon_delete"
         android:title="@string/action_delete"

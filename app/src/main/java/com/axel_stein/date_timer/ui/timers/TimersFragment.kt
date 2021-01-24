@@ -10,7 +10,7 @@ import com.axel_stein.date_timer.databinding.FragmentTimersBinding
 import com.axel_stein.date_timer.utils.LinearLayoutManagerWrapper
 import com.axel_stein.date_timer.utils.setVisible
 
-class FragmentTimers : Fragment() {
+class TimersFragment : Fragment() {
     private lateinit var binding: FragmentTimersBinding
     private val viewModel: TimersViewModel by viewModels()
     private val listAdapter = TimersAdapter()

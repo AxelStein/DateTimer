@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment_timers"
-        android:name="com.axel_stein.date_timer.ui.timers.FragmentTimers"
+        android:name="com.axel_stein.date_timer.ui.timers.TimersFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_timers">
         <action
@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/fragment_edit_timer"
-        android:name="com.axel_stein.date_timer.ui.edit_timer.FragmentEditTimer"
+        android:name="com.axel_stein.date_timer.ui.edit_timer.EditTimerFragment"
         android:label=""
         tools:layout="@layout/fragment_edit_timer">
         <argument

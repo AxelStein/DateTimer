@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import com.axel_stein.date_timer.R
 import org.joda.time.DateTime
 import org.joda.time.MutablePeriod
 import org.joda.time.format.PeriodFormatterBuilder
@@ -15,13 +16,13 @@ class TimerView : AppCompatTextView {
 
     private val periodFormatter = PeriodFormatterBuilder()
         .appendYears()
-        .appendSuffix(" y ")
+        .appendSuffix(context.getString(R.string.suffix_year))
         .appendMonths()
-        .appendSuffix(" mth ")
+        .appendSuffix(context.getString(R.string.suffix_month))
         .appendWeeks()
-        .appendSuffix(" wk ")
+        .appendSuffix(context.getString(R.string.suffix_week))
         .appendDays()
-        .appendSuffix(" d ")
+        .appendSuffix(context.getString(R.string.suffix_day))
         .minimumPrintedDigits(2)
         .printZeroAlways()
         .appendHours()

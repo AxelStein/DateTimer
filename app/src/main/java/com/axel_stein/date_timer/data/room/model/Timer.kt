@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 
 @Entity(tableName = "timers")
 data class Timer(
-    var title: String,
+    var title: String = "",
     var paused: Boolean = false,
     var completed: Boolean = false,
 
@@ -15,7 +15,7 @@ data class Timer(
     var countDown: Boolean = true,
 
     @ColumnInfo(name = "date_time")
-    var dateTime: DateTime,
+    var dateTime: DateTime = DateTime(),
 ) {
     @PrimaryKey(autoGenerate = true)
     var id = 0L
