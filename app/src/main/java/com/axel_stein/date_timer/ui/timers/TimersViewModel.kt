@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.data.AppSettings
+import com.axel_stein.date_timer.data.AppSettings.TimersSort.DATE
+import com.axel_stein.date_timer.data.AppSettings.TimersSort.TITLE
 import com.axel_stein.date_timer.data.room.dao.TimerDao
 import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.ui.App
@@ -35,6 +37,16 @@ class TimersViewModel : ViewModel() {
         loadItems()
     }
 
+    fun sortByTitle() {
+        settings.sortTimersByTitle()
+        loadItems()
+    }
+
+    fun sortByDate() {
+        settings.sortTimersByDate()
+        loadItems()
+    }
+
     private fun loadItems() {
         disposables.clear()
         disposables.add(
@@ -52,12 +64,20 @@ class TimersViewModel : ViewModel() {
                             timers.add(timer)
                         }
                     }
-                    items.postValue(timers)
+                    items.postValue(sortItems(timers))
                 }, {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error_loading))
                 })
         )
+    }
+
+    private fun sortItems(list: ArrayList<Timer>): List<Timer> {
+        when (settings.getTimersSort()) {
+            TITLE -> list.sortBy { it.title }
+            DATE -> list.sortByDescending { it.dateTime }
+        }
+        return list
     }
 
     @Inject

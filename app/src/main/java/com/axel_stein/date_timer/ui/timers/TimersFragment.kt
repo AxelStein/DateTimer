@@ -79,6 +79,8 @@ class TimersFragment : Fragment() {
                 item.isChecked = !item.isChecked
                 viewModel.showCompleted(item.isChecked)
             }
+            R.id.menu_sort_timers_title -> viewModel.sortByTitle()
+            R.id.menu_sort_timers_date -> viewModel.sortByDate()
         }
         return super.onOptionsItemSelected(item)
     }
