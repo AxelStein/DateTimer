@@ -28,4 +28,5 @@
     <string name="suffix_month">mth </string>
     <string name="suffix_week">wk </string>
     <string name="suffix_year">y </string>
+    <string name="msg_timer_completed">Timer completed</string>
 </resources>

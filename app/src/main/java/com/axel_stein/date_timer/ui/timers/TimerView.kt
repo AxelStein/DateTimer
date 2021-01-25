@@ -133,7 +133,9 @@ class TimerView : AppCompatTextView {
                 text = periodFormatter.print(period)
             }
             STATE_COUNTDOWN_COMPLETED -> {
-                onTimerCompleted?.invoke()
+                if (timer?.completed != true) {
+                    onTimerCompleted?.invoke()
+                }
                 text = formatDateTime(context, timer?.dateTime)
             }
         }

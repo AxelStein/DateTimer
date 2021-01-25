@@ -10,6 +10,8 @@ import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.databinding.ItemTimerBinding
 import com.axel_stein.date_timer.utils.setVisible
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
 
 class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
@@ -58,6 +60,7 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
             binding.title.text = timer.title
             binding.timer.setTimer(timer)
             binding.timer.onTimerCompleted = {
+                Snackbar.make(itemView, R.string.msg_timer_completed, LENGTH_SHORT).show()
                 onTimerCompletedListener?.invoke(timer)
             }
             binding.buttonPause.setImageResource(
