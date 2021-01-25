@@ -12,12 +12,18 @@ abstract class TimerDao : BaseDao<Timer>() {
     @Query("UPDATE timers SET paused = :paused WHERE id = :id")
     abstract fun setPaused(id: Long, paused: Boolean): Completable
 
+    @Query("UPDATE timers SET completed = :completed WHERE id = :id")
+    abstract fun setCompleted(id: Long, completed: Boolean): Completable
+
     @Query("delete FROM timers WHERE id = :id")
     abstract fun deleteById(id: Long): Completable
 
     @Query("SELECT * FROM timers WHERE id = :id")
     abstract fun getById(id: Long): Single<Timer>
 
-    @Query("SELECT * FROM timers ORDER BY title")
+    @Query("SELECT * FROM timers")
     abstract fun getAll(): Flowable<List<Timer>>
+
+    @Query("SELECT * FROM timers WHERE completed = 0")
+    abstract fun getNotCompleted(): Flowable<List<Timer>>
 }

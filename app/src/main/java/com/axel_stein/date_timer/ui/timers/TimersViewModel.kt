@@ -48,36 +48,28 @@ class TimersViewModel : ViewModel() {
     }
 
     private fun loadItems() {
+        val getItems = if (settings.showCompletedTimers()) {
+            dao.getAll()
+        } else {
+            dao.getNotCompleted()
+        }
+
         disposables.clear()
         disposables.add(
-            dao.getAll()
-                .subscribe({
-                    val showCompleted = settings.showCompletedTimers()
-                    val timers = ArrayList<Timer>()
-                    it.forEach { timer ->
-                        if (timer.countDown) {
-                            val ms = System.currentTimeMillis()
-                            if (showCompleted || ms < timer.dateTime.millis) {
-                                timers.add(timer)
-                            }
-                        } else {
-                            timers.add(timer)
-                        }
-                    }
-                    items.postValue(sortItems(timers))
-                }, {
-                    it.printStackTrace()
-                    showMessage.postValue(Event(R.string.error_loading))
-                })
+            getItems.subscribe({
+                items.postValue(sortItems(it))
+            }, {
+                it.printStackTrace()
+                showMessage.postValue(Event(R.string.error_loading))
+            })
         )
     }
 
-    private fun sortItems(list: ArrayList<Timer>): List<Timer> {
-        when (settings.getTimersSort()) {
-            TITLE -> list.sortBy { it.title }
-            DATE -> list.sortByDescending { it.dateTime }
+    private fun sortItems(list: List<Timer>): List<Timer> {
+        return when (settings.getTimersSort()) {
+            TITLE -> list.sortedBy { it.title }
+            DATE -> list.sortedByDescending { it.dateTime }
         }
-        return list
     }
 
     @Inject
@@ -90,6 +82,14 @@ class TimersViewModel : ViewModel() {
         dao.setPaused(timer.id, !timer.paused)
             .subscribeOn(io())
             .subscribe()
+    }
+
+    fun completeTimer(timer: Timer) {
+        if (!timer.completed) {
+            dao.setCompleted(timer.id, true)
+                .subscribeOn(io())
+                .subscribe()
+        }
     }
 
     override fun onCleared() {

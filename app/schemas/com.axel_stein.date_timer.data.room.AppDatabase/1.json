@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "287ec44841ab0f5898ee50fa2914ce74",
+    "identityHash": "533d00971afeb361d64251a2a06ef04e",
     "entities": [
       {
         "tableName": "timers",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `paused` INTEGER NOT NULL, `count_down` INTEGER NOT NULL, `date_time` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `paused` INTEGER NOT NULL, `completed` INTEGER NOT NULL, `count_down` INTEGER NOT NULL, `date_time` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -23,6 +23,12 @@
           {
             "fieldPath": "paused",
             "columnName": "paused",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "completed",
+            "columnName": "completed",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -52,7 +58,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '287ec44841ab0f5898ee50fa2914ce74')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '533d00971afeb361d64251a2a06ef04e')"
     ]
   }
 }

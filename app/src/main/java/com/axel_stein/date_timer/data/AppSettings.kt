@@ -22,7 +22,7 @@ class AppSettings(context: Context) {
         prefs.edit().putString("sort_timers", DATE.name).apply()
     }
 
-    fun getTimersSort() = TimersSort.valueOf(prefs.getString("sort_timers", TITLE.name) ?: TITLE.name)
+    fun getTimersSort() = TimersSort.valueOf(prefs.getString("sort_timers", DATE.name) ?: DATE.name)
 
     enum class TimersSort {
         TITLE,

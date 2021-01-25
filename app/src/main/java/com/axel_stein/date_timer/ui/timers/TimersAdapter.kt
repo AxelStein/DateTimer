@@ -28,6 +28,7 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
 
     var onTimerClickListener: ((timer: Timer) -> Unit)? = null
     var onPauseClickListener: ((timer: Timer) -> Unit)? = null
+    var onTimerCompletedListener: ((timer: Timer) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val vh = ViewHolder(parent.inflate(R.layout.item_timer))
@@ -44,27 +45,23 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
         holder.setItem(getItem(position))
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemTimerBinding.bind(view)
 
-        fun setItem(item: Timer) {
+        fun setItem(timer: Timer) {
             binding.icon.setImageResource(
-                if (item.countDown) R.drawable.icon_count_down
+                if (timer.countDown) R.drawable.icon_count_down
                 else R.drawable.icon_count_up
             )
-            binding.title.text = item.title
-            if (item.paused) {
-                binding.timer.setDateTime(null)
-            } else {
-                binding.timer.setDateTime(item.dateTime)
-            }
-            binding.timer.setCountDown(item.countDown)
-            binding.timer.onCountDownEnd = {
+            binding.title.text = timer.title
+            binding.timer.setTimer(timer)
+            binding.timer.onTimerCompleted = {
                 binding.buttonPause.setVisible(false)
                 binding.iconDone.setVisible(true)
+                onTimerCompletedListener?.invoke(timer)
             }
             binding.buttonPause.setImageResource(
-                if (item.paused) R.drawable.icon_resume
+                if (timer.paused) R.drawable.icon_resume
                 else R.drawable.icon_pause
             )
         }

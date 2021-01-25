@@ -9,6 +9,7 @@ import org.joda.time.DateTime
 data class Timer(
     var title: String = "",
     var paused: Boolean = false,
+    var completed: Boolean = false,
 
     @ColumnInfo(name = "count_down")
     var countDown: Boolean = true,

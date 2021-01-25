@@ -45,6 +45,9 @@ class TimersFragment : Fragment() {
         listAdapter.onPauseClickListener = { timer ->
             viewModel.pauseTimer(timer)
         }
+        listAdapter.onTimerCompletedListener = { timer ->
+            viewModel.completeTimer(timer)
+        }
         return binding.root
     }
 

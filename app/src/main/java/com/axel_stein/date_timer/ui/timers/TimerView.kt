@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import com.axel_stein.date_timer.R
+import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.utils.formatDateTime
-import org.joda.time.DateTime
 import org.joda.time.MutablePeriod
 import org.joda.time.format.PeriodFormatterBuilder
 
@@ -34,9 +34,9 @@ class TimerView : AppCompatTextView {
         .toFormatter()
 
     private val period = MutablePeriod()
-    private var dateTime: DateTime? = null
+    private var timer: Timer? = null
     private var visible = true
-    private var running = true
+    private var running = false
     private val tickRunnable = object : Runnable {
         override fun run() {
             if (running) {
@@ -45,16 +45,14 @@ class TimerView : AppCompatTextView {
             }
         }
     }
-    private var countDown = true
-    var onCountDownEnd: (() -> Unit)? = null
+    var onTimerCompleted: (() -> Unit)? = null
 
-    fun setDateTime(dateTime: DateTime?) {
-        this.dateTime = dateTime
+    fun setTimer(timer: Timer) {
+        this.timer = timer
+        if (timer.paused || timer.completed) {
+            text = formatDateTime(context, timer.dateTime)
+        }
         updateRunning()
-    }
-
-    fun setCountDown(value: Boolean) {
-        countDown = value
     }
 
     override fun onDetachedFromWindow() {
@@ -75,7 +73,11 @@ class TimerView : AppCompatTextView {
     }
 
     private fun updateRunning() {
-        val r = visible && isShown && dateTime != null
+        val r = visible && isShown &&
+            timer != null &&
+            timer?.paused != true &&
+            timer?.completed != true
+
         if (r != running) {
             running = r
             if (running) {
@@ -86,16 +88,13 @@ class TimerView : AppCompatTextView {
         }
     }
 
-    // binding.timer.text = formatDateTime(itemView.context, item.dateTime)
     private fun updateText() {
-        dateTime?.let {
+        timer?.dateTime?.let {
             val ms = System.currentTimeMillis()
-            if (countDown) {
-                period.setPeriod(ms, it.millis)
-                if (ms >= it.millis) {
-                    running = false
-                    onCountDownEnd?.invoke()
-                    text = formatDateTime(context, it)
+            if (timer?.countDown == true) {
+                if (!checkTimerCompleted()) {
+                    period.setPeriod(ms, it.millis)
+                } else {
                     return
                 }
             } else {
@@ -103,5 +102,18 @@ class TimerView : AppCompatTextView {
             }
             text = periodFormatter.print(period)
         }
+    }
+
+    private fun checkTimerCompleted(): Boolean {
+        timer?.dateTime?.let {
+            val ms = System.currentTimeMillis()
+            if (timer?.countDown == true && ms >= it.millis) {
+                running = false
+                onTimerCompleted?.invoke()
+                text = formatDateTime(context, it)
+                return true
+            }
+        }
+        return false
     }
 }
