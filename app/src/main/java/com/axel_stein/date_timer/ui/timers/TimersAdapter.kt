@@ -32,7 +32,16 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
 
     var onTimerClickListener: ((timer: Timer) -> Unit)? = null
     var onPauseClickListener: ((timer: Timer) -> Unit)? = null
-    var onTimerCompletedListener: ((timer: Timer) -> Unit)? = null
+    private var onTimerCompletedListener: ((timer: Timer) -> Unit)? = null
+
+    private val completedTimers = mutableSetOf<Timer>()
+
+    fun setOnTimerCompletedListener(listener: (timer: Timer) -> Unit) {
+        onTimerCompletedListener = listener
+        for (timer in completedTimers) {
+            listener.invoke(timer)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val vh = ViewHolder(parent.inflate(R.layout.item_timer))
@@ -58,11 +67,13 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
                 else R.drawable.icon_count_up
             )
             binding.title.text = timer.title
-            binding.timer.setTimer(timer)
             binding.timer.onTimerCompleted = {
-                Snackbar.make(itemView, R.string.msg_timer_completed, LENGTH_SHORT).show()
-                onTimerCompletedListener?.invoke(timer)
+                if (itemView.isAttachedToWindow) {
+                    Snackbar.make(itemView, R.string.msg_timer_completed, LENGTH_SHORT).show()
+                }
+                onTimerCompletedListener?.invoke(timer) ?: completedTimers.add(timer)
             }
+            binding.timer.setTimer(timer)
             binding.buttonPause.setImageResource(
                 if (timer.paused) R.drawable.icon_resume
                 else R.drawable.icon_pause
