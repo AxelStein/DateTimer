@@ -66,16 +66,16 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
 
     private fun checkDateTime() {
         val timer = timerData.get()
-        val dateTime = timer.dateTime
-        val ms = System.currentTimeMillis()
+        val dateTime = timer.dateTime.withSecondOfMinute(0).withMillisOfSecond(0)
+        val now = DateTime.now().withSecondOfMinute(0).withMillisOfSecond(0)
         if (timer.countDown) {
-            if (dateTime.millis < ms) {
+            if (dateTime.isBefore(now)) {
                 errorDateTime.value = R.string.error_date_time_later
             } else {
                 errorDateTime.value = null
             }
         } else {
-            if (dateTime.millis > ms) {
+            if (dateTime.isAfter(now)) {
                 errorDateTime.value = R.string.error_date_time_earlier
             } else {
                 errorDateTime.value = null
@@ -123,6 +123,7 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
                     timer.dateTime = timer.dateTime
                         .withSecondOfMinute(0)
                         .withMillisOfSecond(0)
+                    timer.completed = false
                     dao.upsert(timer)
                 }.subscribeOn(io()).subscribe({
                     showMessage.postValue(Event(R.string.msg_timer_saved))
