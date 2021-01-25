@@ -22,6 +22,8 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
             return a.id == b.id &&
                 a.title == b.title &&
                 a.paused == b.paused &&
+                a.completed == b.completed &&
+                a.countDown == b.countDown &&
                 a.dateTime == b.dateTime
         }
     }
@@ -56,14 +58,14 @@ class TimersAdapter : ListAdapter<Timer, TimersAdapter.ViewHolder>(Companion) {
             binding.title.text = timer.title
             binding.timer.setTimer(timer)
             binding.timer.onTimerCompleted = {
-                binding.buttonPause.setVisible(false)
-                binding.iconDone.setVisible(true)
                 onTimerCompletedListener?.invoke(timer)
             }
             binding.buttonPause.setImageResource(
                 if (timer.paused) R.drawable.icon_resume
                 else R.drawable.icon_pause
             )
+            binding.buttonPause.setVisible(!timer.completed)
+            binding.iconDone.setVisible(timer.completed)
         }
     }
 }
