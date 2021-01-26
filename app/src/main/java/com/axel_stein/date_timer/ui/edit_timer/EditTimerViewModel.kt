@@ -11,14 +11,15 @@ import com.axel_stein.date_timer.ui.App
 import com.axel_stein.date_timer.utils.Event
 import com.axel_stein.date_timer.utils.get
 import com.axel_stein.date_timer.utils.getOrDefault
+import com.axel_stein.date_timer.utils.hasValue
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStateHandle) : ViewModel() {
-    private var timerData = MutableLiveData<Timer>()
+class EditTimerViewModel(private val id: Long = 0L, state: SavedStateHandle) : ViewModel() {
+    private var timerData = state.getLiveData<Timer>("timer")
     val timerLiveData: LiveData<Timer> = timerData
 
     private val errorTitleEmpty = MutableLiveData<Boolean>()
@@ -87,7 +88,6 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
 
     fun setTitle(title: String) {
         timerData.getOrDefault(Timer()).title = title
-        state["title"] = title
         if (title.isNotBlank()) {
             errorTitleEmpty.value = false
         }
@@ -95,11 +95,11 @@ class EditTimerViewModel(private val id: Long = 0L, private val state: SavedStat
 
     fun setCountDown(value: Boolean) {
         timerData.getOrDefault(Timer()).countDown = value
-        state["count_down"] = value
         checkDateTime()
     }
 
     private fun loadData() {
+        if (timerData.hasValue()) return
         if (id == 0L) timerData.value = Timer()
         else dao.getById(id)
             .subscribeOn(io())
