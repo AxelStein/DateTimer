@@ -98,7 +98,7 @@
             android:imeOptions="actionDone"
             android:inputType="textCapSentences"
             android:lines="1"
-            android:maxLength="32"
+            android:maxLength="64"
             tools:text="Birthday" />
 
     </com.google.android.material.textfield.TextInputLayout>
