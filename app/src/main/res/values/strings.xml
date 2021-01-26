@@ -6,6 +6,7 @@
     <string name="action_filter_timers">Filter</string>
     <string name="action_save">Save</string>
     <string name="action_show_completed_timers">Show completed timers</string>
+    <string name="action_show_paused_timers">Show paused timers</string>
     <string name="action_sort">Sort</string>
     <string name="action_sort_date">By date</string>
     <string name="action_sort_title">By title</string>
@@ -21,6 +22,7 @@
     <string name="error_saving">Error saving</string>
     <string name="error_title_empty">Please fill in this field</string>
     <string name="hint_title">Title</string>
+    <string name="msg_timer_completed">Timer completed</string>
     <string name="msg_timer_deleted">Timer deleted</string>
     <string name="msg_timer_saved">Timer saved</string>
     <string name="no_timers">No timers</string>
@@ -28,5 +30,4 @@
     <string name="suffix_month">mth </string>
     <string name="suffix_week">wk </string>
     <string name="suffix_year">y </string>
-    <string name="msg_timer_completed">Timer completed</string>
 </resources>

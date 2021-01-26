@@ -73,6 +73,7 @@ class TimersFragment : Fragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.menu_show_completed_timers).isChecked = settings.showCompletedTimers()
+        menu.findItem(R.id.menu_show_paused_timers).isChecked = settings.showPausedTimers()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -81,6 +82,10 @@ class TimersFragment : Fragment() {
             R.id.menu_show_completed_timers -> {
                 item.isChecked = !item.isChecked
                 viewModel.showCompleted(item.isChecked)
+            }
+            R.id.menu_show_paused_timers -> {
+                item.isChecked = !item.isChecked
+                viewModel.showPaused(item.isChecked)
             }
             R.id.menu_sort_timers_title -> viewModel.sortByTitle()
             R.id.menu_sort_timers_date -> viewModel.sortByDate()

@@ -37,6 +37,11 @@ class TimersViewModel : ViewModel() {
         loadItems()
     }
 
+    fun showPaused(show: Boolean) {
+        settings.setShowPausedTimers(show)
+        loadItems()
+    }
+
     fun sortByTitle() {
         settings.sortTimersByTitle()
         loadItems()
@@ -48,16 +53,16 @@ class TimersViewModel : ViewModel() {
     }
 
     private fun loadItems() {
-        val getItems = if (settings.showCompletedTimers()) {
-            dao.getAll()
-        } else {
-            dao.getNotCompleted()
-        }
-
+        val getItems = if (settings.showCompletedTimers()) dao.getAll() else dao.getNotCompleted()
         disposables.clear()
         disposables.add(
             getItems.subscribe({
-                items.postValue(sortItems(it))
+                val list = if (!settings.showPausedTimers()) {
+                    it.filter { item -> !item.paused }
+                } else {
+                    it
+                }
+                items.postValue(sortItems(list))
             }, {
                 it.printStackTrace()
                 showMessage.postValue(Event(R.string.error_loading))

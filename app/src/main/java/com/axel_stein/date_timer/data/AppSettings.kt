@@ -12,7 +12,13 @@ class AppSettings(context: Context) {
         prefs.edit().putBoolean("show_completed_timers", show).apply()
     }
 
-    fun showCompletedTimers() = prefs.getBoolean("show_completed_timers", true)
+    fun showCompletedTimers() = prefs.getBoolean("show_completed_timers", false)
+
+    fun setShowPausedTimers(show: Boolean) {
+        prefs.edit().putBoolean("show_paused_timers", show).apply()
+    }
+
+    fun showPausedTimers() = prefs.getBoolean("show_paused_timers", false)
 
     fun sortTimersByTitle() {
         prefs.edit().putString("sort_timers", TITLE.name).apply()

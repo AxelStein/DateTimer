@@ -5,7 +5,8 @@
     <string name="action_delete">Удалить</string>
     <string name="action_filter_timers">Фильтр</string>
     <string name="action_save">Сохранить</string>
-    <string name="action_show_completed_timers">Показать завершенные таймеры</string>
+    <string name="action_show_completed_timers">Показывать завершенные таймеры</string>
+    <string name="action_show_paused_timers">Показывать остановленные таймеры</string>
     <string name="action_sort">Сортировать</string>
     <string name="action_sort_date">По дате</string>
     <string name="action_sort_title">По названию</string>
@@ -20,6 +21,7 @@
     <string name="error_saving">Ошибка сохранения</string>
     <string name="error_title_empty">Пожалуйста, заполните это поле</string>
     <string name="hint_title">Название</string>
+    <string name="msg_timer_completed">Таймер завершен</string>
     <string name="msg_timer_deleted">Таймер удален</string>
     <string name="msg_timer_saved">Таймер сохранен</string>
     <string name="no_timers">Нет таймеров</string>

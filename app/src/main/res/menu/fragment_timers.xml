@@ -18,6 +18,10 @@
                 android:id="@+id/menu_show_completed_timers"
                 android:checkable="true"
                 android:title="@string/action_show_completed_timers" />
+            <item
+                android:id="@+id/menu_show_paused_timers"
+                android:checkable="true"
+                android:title="@string/action_show_paused_timers" />
             <item android:title="@string/action_sort">
                 <menu>
                     <item
