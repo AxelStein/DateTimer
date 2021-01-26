@@ -38,7 +38,7 @@ class TimerView : AppCompatTextView {
         private const val STATE_PAUSED = 0
         private const val STATE_COUNTDOWN_COMPLETED = 1
         private const val STATE_COUNTDOWN_RUNNING = 2
-        private const val STATE_COUNT_UP_RUNNING = 3
+        private const val STATE_RUNNING = 3
     }
 
     private val period = MutablePeriod()
@@ -83,7 +83,7 @@ class TimerView : AppCompatTextView {
 
     private fun updateRunning() {
         val r = visible && isShown &&
-            (state == STATE_COUNTDOWN_RUNNING || state == STATE_COUNT_UP_RUNNING)
+            (state == STATE_COUNTDOWN_RUNNING || state == STATE_RUNNING)
         if (r != running) {
             running = r
             if (running) {
@@ -100,16 +100,16 @@ class TimerView : AppCompatTextView {
         state = if (it != null) {
             val ms = System.currentTimeMillis()
             when {
-                it.countDown && ms >= it.dateTime.millis -> STATE_COUNTDOWN_COMPLETED
-                it.completed -> STATE_COUNTDOWN_COMPLETED
                 it.paused -> STATE_PAUSED
+                it.completed -> STATE_COUNTDOWN_COMPLETED
+                it.countDown && ms >= it.dateTime.millis -> STATE_COUNTDOWN_COMPLETED
                 !it.paused && it.countDown -> {
                     running = true
                     STATE_COUNTDOWN_RUNNING
                 }
                 !it.paused && !it.countDown -> {
                     running = true
-                    STATE_COUNT_UP_RUNNING
+                    STATE_RUNNING
                 }
                 else -> STATE_NONE
             }
@@ -122,7 +122,7 @@ class TimerView : AppCompatTextView {
         when (state) {
             STATE_NONE -> text = ""
             STATE_PAUSED -> text = formatDateTime(context, timer?.dateTime)
-            STATE_COUNT_UP_RUNNING -> {
+            STATE_RUNNING -> {
                 val ms = System.currentTimeMillis()
                 period.setPeriod(timer?.dateTime?.millis ?: 0, ms)
                 text = periodFormatter.print(period)
