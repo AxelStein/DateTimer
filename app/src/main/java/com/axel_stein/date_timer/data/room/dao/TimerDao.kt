@@ -26,4 +26,7 @@ abstract class TimerDao : BaseDao<Timer>() {
 
     @Query("SELECT * FROM timers WHERE completed = 0")
     abstract fun getNotCompleted(): Flowable<List<Timer>>
+
+    @Query("SELECT * FROM timers WHERE completed = 0 AND paused = 0 AND count_down = 1")
+    abstract fun getActiveCountDownTimers(): List<Timer>
 }

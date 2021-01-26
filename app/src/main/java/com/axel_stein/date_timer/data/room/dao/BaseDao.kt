@@ -16,10 +16,11 @@ abstract class BaseDao<T> {
     abstract fun delete(item: T)
 
     @Transaction
-    open fun upsert(item: T) {
+    open fun upsert(item: T): Long {
         val id = insert(item)
         if (id == -1L) {
             update(item)
         }
+        return id
     }
 }

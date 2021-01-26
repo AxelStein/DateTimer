@@ -8,6 +8,7 @@ import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.data.room.dao.TimerDao
 import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.ui.App
+import com.axel_stein.date_timer.ui.reminder.ReminderScheduler
 import com.axel_stein.date_timer.utils.Event
 import com.axel_stein.date_timer.utils.get
 import com.axel_stein.date_timer.utils.getOrDefault
@@ -35,6 +36,7 @@ class EditTimerViewModel(private val id: Long = 0L, state: SavedStateHandle) : V
     val actionFinishLiveData: LiveData<Event<Boolean>> = actionFinish
 
     private lateinit var dao: TimerDao
+    private lateinit var reminderScheduler: ReminderScheduler
 
     init {
         App.appComponent.inject(this)
@@ -42,8 +44,9 @@ class EditTimerViewModel(private val id: Long = 0L, state: SavedStateHandle) : V
     }
 
     @Inject
-    fun setDao(dao: TimerDao) {
+    fun inject(dao: TimerDao, r: ReminderScheduler) {
         this.dao = dao
+        this.reminderScheduler = r
     }
 
     fun setDate(year: Int, month: Int, dayOfMonth: Int) {
@@ -124,8 +127,12 @@ class EditTimerViewModel(private val id: Long = 0L, state: SavedStateHandle) : V
                         .withSecondOfMinute(0)
                         .withMillisOfSecond(0)
                     timer.completed = false
-                    dao.upsert(timer)
+                    val id = dao.upsert(timer)
+                    if (id != -1L) {
+                        timer.id = id
+                    }
                 }.subscribeOn(io()).subscribe({
+                    reminderScheduler.schedule(timerData.get())
                     showMessage.postValue(Event(R.string.msg_timer_saved))
                     actionFinish.postValue(Event())
                 }, {
@@ -141,6 +148,7 @@ class EditTimerViewModel(private val id: Long = 0L, state: SavedStateHandle) : V
             .subscribeOn(io())
             .subscribe(
                 {
+                    reminderScheduler.cancel(timerData.get())
                     showMessage.postValue(Event(R.string.msg_timer_deleted))
                     actionFinish.postValue(Event())
                 },

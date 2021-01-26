@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.axel_stein.date_timer.data.AppSettings
 import com.axel_stein.date_timer.data.room.AppDatabase
+import com.axel_stein.date_timer.ui.reminder.ReminderScheduler
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -22,4 +23,8 @@ class AppModule(private val context: Context) {
     @Provides
     @Singleton
     fun provideSettings() = AppSettings(context)
+
+    @Provides
+    @Singleton
+    fun provideReminderScheduler() = ReminderScheduler(context)
 }

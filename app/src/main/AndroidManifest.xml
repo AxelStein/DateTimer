@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.axel_stein.date_timer">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
         android:name=".ui.App"
         android:allowBackup="true"
@@ -20,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:enabled="true"
+            android:name=".ui.reminder.ReminderReceiver">
+            <intent-filter>
+                <action android:name="com.axel_stein.date_timer.SHOW_REMINDER"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
