@@ -10,6 +10,7 @@ import com.axel_stein.date_timer.data.AppSettings.TimersSort.TITLE
 import com.axel_stein.date_timer.data.room.dao.TimerDao
 import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.ui.App
+import com.axel_stein.date_timer.ui.reminder.ReminderScheduler
 import com.axel_stein.date_timer.utils.Event
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
@@ -27,6 +28,7 @@ class TimersViewModel : ViewModel() {
     val showMessageLiveData: LiveData<Event<Int>> = showMessage
 
     private lateinit var settings: AppSettings
+    private lateinit var reminderScheduler: ReminderScheduler
 
     init {
         App.appComponent.inject(this)
@@ -79,9 +81,10 @@ class TimersViewModel : ViewModel() {
     }
 
     @Inject
-    fun inject(dao: TimerDao, settings: AppSettings) {
+    fun inject(dao: TimerDao, settings: AppSettings, scheduler: ReminderScheduler) {
         this.dao = dao
         this.settings = settings
+        this.reminderScheduler = scheduler
     }
 
     fun pauseTimer(timer: Timer) {
@@ -89,7 +92,16 @@ class TimersViewModel : ViewModel() {
         val dt = if (paused) DateTime.now() else null
         val d = dao.setPaused(timer.id, paused, dt)
             .subscribeOn(io())
-            .subscribe({}, {
+            .subscribe({
+                val copy = timer.copy()
+                copy.id = timer.id
+                copy.paused = paused
+                if (paused) {
+                    reminderScheduler.cancel(copy)
+                } else {
+                    reminderScheduler.schedule(copy)
+                }
+            }, {
                 it.printStackTrace()
                 showMessage.postValue(Event(R.string.error))
             })
