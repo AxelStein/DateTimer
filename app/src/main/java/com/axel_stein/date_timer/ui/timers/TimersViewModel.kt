@@ -13,6 +13,7 @@ import com.axel_stein.date_timer.ui.App
 import com.axel_stein.date_timer.utils.Event
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 class TimersViewModel : ViewModel() {
@@ -84,16 +85,26 @@ class TimersViewModel : ViewModel() {
     }
 
     fun pauseTimer(timer: Timer) {
-        dao.setPaused(timer.id, !timer.paused)
+        val paused = !timer.paused
+        val dt = if (paused) DateTime.now() else null
+        val d = dao.setPaused(timer.id, paused, dt)
             .subscribeOn(io())
-            .subscribe()
+            .subscribe({}, {
+                it.printStackTrace()
+                showMessage.postValue(Event(R.string.error))
+            })
+        disposables.add(d)
     }
 
     fun completeTimer(timer: Timer) {
         if (!timer.completed) {
-            dao.setCompleted(timer.id, true)
+            val d = dao.setCompleted(timer.id, true)
                 .subscribeOn(io())
-                .subscribe()
+                .subscribe({}, {
+                    it.printStackTrace()
+                    showMessage.postValue(Event(R.string.error))
+                })
+            disposables.add(d)
         }
     }
 

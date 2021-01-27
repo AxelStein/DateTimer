@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.data.room.model.Timer
 import com.axel_stein.date_timer.utils.formatDateTime
+import org.joda.time.DateTime
 import org.joda.time.MutablePeriod
 import org.joda.time.format.PeriodFormatterBuilder
 
@@ -35,10 +36,11 @@ class TimerView : AppCompatTextView {
 
     companion object {
         private const val STATE_NONE = -1
-        private const val STATE_PAUSED = 0
-        private const val STATE_COUNTDOWN_COMPLETED = 1
-        private const val STATE_COUNTDOWN_RUNNING = 2
-        private const val STATE_RUNNING = 3
+        private const val STATE_TIMER_PAUSED = 0
+        private const val STATE_STOPWATCH_PAUSED = 1
+        private const val STATE_TIMER_COMPLETED = 2
+        private const val STATE_TIMER_RUNNING = 3
+        private const val STATE_STOPWATCH_RUNNING = 4
     }
 
     private val period = MutablePeriod()
@@ -83,7 +85,7 @@ class TimerView : AppCompatTextView {
 
     private fun updateRunning() {
         val r = visible && isShown &&
-            (state == STATE_COUNTDOWN_RUNNING || state == STATE_RUNNING)
+            (state == STATE_TIMER_RUNNING || state == STATE_STOPWATCH_RUNNING)
         if (r != running) {
             running = r
             if (running) {
@@ -100,16 +102,17 @@ class TimerView : AppCompatTextView {
         state = if (it != null) {
             val ms = System.currentTimeMillis()
             when {
-                it.paused -> STATE_PAUSED
-                it.completed -> STATE_COUNTDOWN_COMPLETED
-                it.countDown && ms >= it.dateTime.millis -> STATE_COUNTDOWN_COMPLETED
-                !it.paused && it.countDown -> {
+                it.paused && it.countDown-> STATE_TIMER_PAUSED
+                it.paused && !it.countDown-> STATE_STOPWATCH_PAUSED
+                it.completed -> STATE_TIMER_COMPLETED
+                it.countDown && ms >= it.dateTime.millis -> STATE_TIMER_COMPLETED
+                !it.paused && it.countDown-> {
                     running = true
-                    STATE_COUNTDOWN_RUNNING
+                    STATE_TIMER_RUNNING
                 }
-                !it.paused && !it.countDown -> {
+                !it.paused && !it.countDown-> {
                     running = true
-                    STATE_RUNNING
+                    STATE_STOPWATCH_RUNNING
                 }
                 else -> STATE_NONE
             }
@@ -119,25 +122,43 @@ class TimerView : AppCompatTextView {
     }
 
     private fun updateText() {
-        when (state) {
-            STATE_NONE -> text = ""
-            STATE_PAUSED -> text = formatDateTime(context, timer?.dateTime)
-            STATE_RUNNING -> {
-                val ms = System.currentTimeMillis()
-                period.setPeriod(timer?.dateTime?.millis ?: 0, ms)
-                text = periodFormatter.print(period)
-            }
-            STATE_COUNTDOWN_RUNNING -> {
-                val ms = System.currentTimeMillis()
-                period.setPeriod(ms, timer?.dateTime?.millis ?: 0)
-                text = periodFormatter.print(period)
-            }
-            STATE_COUNTDOWN_COMPLETED -> {
-                if (timer?.completed != true) {
-                    onTimerCompleted?.invoke()
+        val it = timer
+        if (it != null) {
+            when (state) {
+                STATE_NONE -> text = ""
+                STATE_TIMER_PAUSED -> {
+                    updateText(it, it.pausedDateTime, it.dateTime)
                 }
-                text = formatDateTime(context, timer?.dateTime)
+                STATE_STOPWATCH_PAUSED -> {
+                    updateText(it, it.dateTime, it.pausedDateTime)
+                }
+                STATE_TIMER_RUNNING -> {
+                    updateText(System.currentTimeMillis(), it.dateTime.millis)
+                }
+                STATE_STOPWATCH_RUNNING -> {
+                    updateText(it.dateTime.millis, System.currentTimeMillis())
+                }
+                STATE_TIMER_COMPLETED -> {
+                    if (!it.completed) {
+                        onTimerCompleted?.invoke()
+                    }
+                    text = formatDateTime(context, it.dateTime)
+                }
             }
         }
+    }
+
+    private fun updateText(it: Timer, start: DateTime?, end: DateTime?) {
+        text = if (it.pausedDateTime == null) {
+            formatDateTime(context, it.dateTime)
+        } else {
+            period.setPeriod(start, end)
+            periodFormatter.print(period)
+        }
+    }
+
+    private fun updateText(start: Long, end: Long) {
+        period.setPeriod(start, end)
+        text = periodFormatter.print(period)
     }
 }

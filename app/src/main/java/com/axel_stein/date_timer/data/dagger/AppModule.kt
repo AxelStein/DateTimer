@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.axel_stein.date_timer.data.AppSettings
 import com.axel_stein.date_timer.data.room.AppDatabase
+import com.axel_stein.date_timer.data.room.migrate_1_2
 import com.axel_stein.date_timer.ui.reminder.ReminderScheduler
 import dagger.Module
 import dagger.Provides
@@ -14,7 +15,9 @@ class AppModule(private val context: Context) {
     @Provides
     @Singleton
     fun provideDatabase(): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, context.packageName).build()
+        return Room.databaseBuilder(context, AppDatabase::class.java, context.packageName)
+            .addMigrations(migrate_1_2())
+            .build()
     }
 
     @Provides

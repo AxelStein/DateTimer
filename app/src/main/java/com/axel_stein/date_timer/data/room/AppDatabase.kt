@@ -10,7 +10,7 @@ import com.axel_stein.date_timer.data.room.model.Timer
     entities = [
         Timer::class
     ],
-    version = 1
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

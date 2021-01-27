@@ -18,6 +18,9 @@ data class Timer(
 
     @ColumnInfo(name = "date_time")
     var dateTime: DateTime = DateTime(),
+
+    @ColumnInfo(name = "paused_date_time")
+    var pausedDateTime: DateTime? = null,
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id = 0L
@@ -37,6 +40,7 @@ data class Timer(
         completed = parcel?.readInt() == 1,
         countDown = parcel?.readInt() == 1,
         dateTime = DateTime(parcel?.readString()),
+        pausedDateTime = DateTime(parcel?.readString())
     ) {
         id = parcel?.readLong() ?: 0L
     }
@@ -49,6 +53,7 @@ data class Timer(
         dest?.writeInt(if (completed) 1 else 0)
         dest?.writeInt(if (countDown) 1 else 0)
         dest?.writeString(dateTime.toString())
+        dest?.writeString(pausedDateTime?.toString())
         dest?.writeLong(id)
     }
 }

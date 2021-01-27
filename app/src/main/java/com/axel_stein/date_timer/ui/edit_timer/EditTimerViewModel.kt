@@ -133,9 +133,13 @@ class EditTimerViewModel(private val id: Long = 0L, state: SavedStateHandle) : V
                         // set timer's seconds and millis to zero
                         if (now != dt) {
                             timer.dateTime = dt
-                        } else {
+                        } else if (id == 0L) {
                             timer.dateTime = DateTime.now()
                         }
+                    } else {
+                        timer.dateTime = timer.dateTime
+                            .withSecondOfMinute(0)
+                            .withMillisOfSecond(0)
                     }
                     timer.completed = false
                     val id = dao.upsert(timer)

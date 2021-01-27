@@ -6,11 +6,12 @@ import com.axel_stein.date_timer.data.room.model.Timer
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import org.joda.time.DateTime
 
 @Dao
 abstract class TimerDao : BaseDao<Timer>() {
-    @Query("UPDATE timers SET paused = :paused WHERE id = :id")
-    abstract fun setPaused(id: Long, paused: Boolean): Completable
+    @Query("UPDATE timers SET paused = :paused, paused_date_time = :dateTime WHERE id = :id")
+    abstract fun setPaused(id: Long, paused: Boolean, dateTime: DateTime?): Completable
 
     @Query("UPDATE timers SET completed = :completed WHERE id = :id")
     abstract fun setCompleted(id: Long, completed: Boolean): Completable
