@@ -75,9 +75,9 @@ class EditTimerFragment : Fragment(), ConfirmDialog.OnConfirmListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
         inflater.inflate(R.menu.fragment_edit_timer, menu)
         menu.findItem(R.id.menu_delete_timer)?.isVisible = id != 0L
-        // todo pause
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -37,4 +37,24 @@
     <string name="suffix_month">mth </string>
     <string name="suffix_week">wk </string>
     <string name="suffix_year">y </string>
+    <string name="main_pref_theme">Theme</string>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_system">Follow system</string>
+    <string name="action_settings">Settings</string>
+    <string name="main_pref_category_about_app">About app</string>
+    <string name="main_pref_rate_app">Rate app</string>
+    <string name="app_version" translatable="false">1.0.2</string>
+    <string name="main_pref_app_version_title">Version</string>
+    <string name="ringtone_default">Default</string>
+    <string-array name="theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
 </resources>

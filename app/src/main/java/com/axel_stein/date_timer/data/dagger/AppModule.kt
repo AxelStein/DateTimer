@@ -6,6 +6,7 @@ import com.axel_stein.date_timer.data.AppSettings
 import com.axel_stein.date_timer.data.room.AppDatabase
 import com.axel_stein.date_timer.data.room.migrate_1_2
 import com.axel_stein.date_timer.ui.reminder.ReminderScheduler
+import com.axel_stein.date_timer.ui.reminder.RingtoneHelper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -30,4 +31,7 @@ class AppModule(private val context: Context) {
     @Provides
     @Singleton
     fun provideReminderScheduler() = ReminderScheduler(context)
+
+    @Provides
+    fun provideRingtoneHelper(settings: AppSettings) = RingtoneHelper(context, settings)
 }

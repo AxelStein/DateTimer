@@ -34,4 +34,13 @@
             app:argType="long" />
     </fragment>
 
+    <fragment
+        android:id="@+id/preferences_fragment"
+        android:name="com.axel_stein.date_timer.ui.preferences.PreferencesFragment"
+        android:label="@string/action_settings" />
+
+    <action
+        android:id="@+id/action_open_preferences"
+        app:destination="@id/preferences_fragment" />
+
 </navigation>
