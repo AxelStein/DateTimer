@@ -21,6 +21,8 @@
     <string name="error_saving">Ошибка сохранения</string>
     <string name="error_title_empty">Пожалуйста, заполните это поле</string>
     <string name="hint_title">Название</string>
+    <string name="mode_stopwatch">Секундомер</string>
+    <string name="mode_timer">Таймер</string>
     <string name="msg_timer_completed">Таймер завершен</string>
     <string name="msg_timer_deleted">Таймер удален</string>
     <string name="msg_timer_saved">Таймер сохранен</string>

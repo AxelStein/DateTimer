@@ -22,6 +22,12 @@
     <string name="error_saving">Error saving</string>
     <string name="error_title_empty">Please fill in this field</string>
     <string name="hint_title">Title</string>
+    <string-array name="mode">
+        <item>@string/mode_timer</item>
+        <item>@string/mode_stopwatch</item>
+    </string-array>
+    <string name="mode_stopwatch">Stopwatch</string>
+    <string name="mode_timer">Timer</string>
     <string name="msg_timer_completed">Timer completed</string>
     <string name="msg_timer_deleted">Timer deleted</string>
     <string name="msg_timer_saved">Timer saved</string>

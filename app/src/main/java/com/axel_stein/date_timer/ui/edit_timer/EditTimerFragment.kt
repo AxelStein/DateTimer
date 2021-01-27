@@ -28,10 +28,10 @@ class EditTimerFragment : Fragment(), ConfirmDialog.OnConfirmListener {
         binding.editTitle.setupEditor {
             viewModel.setTitle(it)
         }
-        binding.switchCountDown.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setCountDown(isChecked)
+        binding.spinnerMode.onItemSelectedListener = setItemSelectedListener {
+            viewModel.setCountDown(it == 0)
         }
-        binding.switchCountDown.setVisible(id == 0L)
+        binding.spinnerMode.setVisible(id == 0L)
         binding.btnDate.setOnClickListener {
             showDatePicker(requireContext(), viewModel.getCurrentDateTime()) { year, month, dayOfMonth ->
                 viewModel.setDate(year, month, dayOfMonth)
@@ -51,7 +51,7 @@ class EditTimerFragment : Fragment(), ConfirmDialog.OnConfirmListener {
         super.onViewCreated(view, savedInstanceState)
         viewModel.timerLiveData.observe(viewLifecycleOwner, {
             binding.editTitle.setEditorText(it.title)
-            binding.switchCountDown.isChecked = it.countDown
+            binding.spinnerMode.setSelection(if (it.countDown) 0 else 1)
             binding.btnDate.text = formatDate(requireContext(), it.dateTime)
             binding.btnTime.text = formatTime(requireContext(), it.dateTime)
         })
