@@ -19,12 +19,12 @@
             app:defaultValue="true"
             app:iconSpaceReserved="false"
             app:key="reminders_enabled"
-            app:title="Enable reminders"/>
+            app:title="@string/main_pref_reminders_enabled"/>
 
         <Preference
             app:iconSpaceReserved="false"
             app:key="reminder_trouble"
-            app:title="Reminder troubleshooting"/>
+            app:title="@string/main_pref_reminder_trouble"/>
 
     </PreferenceCategory>
 
@@ -35,13 +35,13 @@
         <Preference
             app:iconSpaceReserved="false"
             app:key="notification_ringtone"
-            app:title="Ringtone"/>
+            app:title="@string/main_pref_ringtone"/>
 
         <SwitchPreference
             app:defaultValue="true"
             app:iconSpaceReserved="false"
             app:key="notification_led"
-            app:title="Led light"/>
+            app:title="@string/main_pref_notification_led"/>
 
     </PreferenceCategory>
 

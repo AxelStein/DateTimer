@@ -5,6 +5,7 @@
     <string name="action_delete">Удалить</string>
     <string name="action_filter_timers">Фильтр</string>
     <string name="action_save">Сохранить</string>
+    <string name="action_settings">Настройки</string>
     <string name="action_show_completed_timers">Показывать завершенные таймеры</string>
     <string name="action_show_paused_timers">Показывать остановленные таймеры</string>
     <string name="action_sort">Сортировать</string>
@@ -22,14 +23,26 @@
     <string name="error_saving">Ошибка сохранения</string>
     <string name="error_title_empty">Пожалуйста, заполните это поле</string>
     <string name="hint_title">Название</string>
+    <string name="main_pref_app_version_title">Версия</string>
+    <string name="main_pref_category_about_app">О приложении</string>
+    <string name="main_pref_notification_led">Световой индикатор</string>
+    <string name="main_pref_rate_app">Оценить приложение</string>
+    <string name="main_pref_reminder_trouble">Устранение неполадок с напоминаниями</string>
+    <string name="main_pref_reminders_enabled">Включить напоминания</string>
+    <string name="main_pref_ringtone">Звук уведомления</string>
+    <string name="main_pref_theme">Тема</string>
     <string name="mode_stopwatch">Секундомер</string>
     <string name="mode_timer">Таймер</string>
     <string name="msg_timer_completed">Таймер завершен</string>
     <string name="msg_timer_deleted">Таймер удален</string>
     <string name="msg_timer_saved">Таймер сохранен</string>
     <string name="no_timers">Нет таймеров</string>
+    <string name="ringtone_default">По умолчанию</string>
     <string name="suffix_day">д </string>
     <string name="suffix_month">мес </string>
     <string name="suffix_week">нед </string>
     <string name="suffix_year">г </string>
+    <string name="theme_dark">Темная</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_system">Настройки системы</string>
 </resources>
