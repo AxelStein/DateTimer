@@ -21,14 +21,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="16sp"
-            android:text="Step 1. Check autostart settings" />
+            android:text="@string/step_1_title" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="?android:attr/textColorSecondary"
-            android:text="App needs to run automatically in the background when the phone start up to send you reminders on time."/>
+            android:text="@string/step_1_description"/>
 
     </LinearLayout>
 
@@ -44,14 +44,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="16sp"
-            android:text="Step 2. Verify notification sound is enabled" />
+            android:text="@string/step_2_title" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="16sp"
-            android:text="Notification settings may be disabled on your device. To fix this, enable notification sound in settings"/>
+            android:text="@string/step_2_description"/>
 
     </LinearLayout>
 
@@ -67,14 +67,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="16sp"
-            android:text="Step 3. Adjust advanced battery settings" />
+            android:text="@string/step_3_title" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="16sp"
-            android:text="Go to your phone battery settings and exclude app from any battery saving settings."/>
+            android:text="@string/step_3_description"/>
 
     </LinearLayout>
 
@@ -90,37 +90,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="16sp"
-            android:text="Step 4. Don't force stop" />
+            android:text="@string/step_4_title" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="16sp"
-            android:text="Closing app through the task manager might block reminders."/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="16sp"
-            android:text="Step 5. Disable task killers" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textSize="16sp"
-            android:text="Battery savers or anti-viruses may terminate app and block reminders."/>
+            android:text="@string/step_4_description"/>
 
     </LinearLayout>
 </LinearLayout>

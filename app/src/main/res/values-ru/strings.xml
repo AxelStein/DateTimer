@@ -38,6 +38,14 @@
     <string name="msg_timer_saved">Таймер сохранен</string>
     <string name="no_timers">Нет таймеров</string>
     <string name="ringtone_default">По умолчанию</string>
+    <string name="step_1_description">Приложение должно запускаться автоматически в фоновом режиме, чтобы уведомления приходили вовремя.</string>
+    <string name="step_1_title">1. Проверьте настройки автозапуска</string>
+    <string name="step_2_description">Возможно на вашем устройстве отключен звук напоминаний. Исправить это можно в настройках.</string>
+    <string name="step_2_title">2. Проверьте, включен ли звук уведомлений</string>
+    <string name="step_3_description">Перейдите в настройки батареи и исключите приложение из любых настроек экономии батареи</string>
+    <string name="step_3_title">3. Настройте дополнительные параметры батареи</string>
+    <string name="step_4_description">Закрытие приложения с помощью диспетчера задач может блокировать напоминания.</string>
+    <string name="step_4_title">4. Не останавливайте приложение принудительно</string>
     <string name="suffix_day">д </string>
     <string name="suffix_month">мес </string>
     <string name="suffix_week">нед </string>

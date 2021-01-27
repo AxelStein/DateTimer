@@ -37,10 +37,20 @@
     <fragment
         android:id="@+id/preferences_fragment"
         android:name="com.axel_stein.date_timer.ui.preferences.PreferencesFragment"
-        android:label="@string/action_settings" />
+        android:label="@string/action_settings" >
+        <action
+            android:id="@+id/action_open_reminder_trouble"
+            app:destination="@id/reminder_trouble_fragment" />
+    </fragment>
 
     <action
         android:id="@+id/action_open_preferences"
         app:destination="@id/preferences_fragment" />
+
+    <fragment
+        android:id="@+id/reminder_trouble_fragment"
+        android:name="com.axel_stein.date_timer.ui.preferences.ReminderTroubleFragment"
+        android:label="@string/main_pref_reminder_trouble"
+        tools:layout="@layout/fragment_reminder_trouble" />
 
 </navigation>

@@ -44,6 +44,14 @@
     <string name="msg_timer_saved">Timer saved</string>
     <string name="no_timers">No timers</string>
     <string name="ringtone_default">Default</string>
+    <string name="step_1_description">App needs to run automatically in the background when the phone start up to send you reminders on time.</string>
+    <string name="step_1_title">1. Check autostart settings</string>
+    <string name="step_2_description">Notification settings may be disabled on your device. To fix this, enable notification sound in settings</string>
+    <string name="step_2_title">2. Verify notification sound is enabled</string>
+    <string name="step_3_description">Go to your phone battery settings and exclude app from any battery saving settings.</string>
+    <string name="step_3_title">3. Adjust advanced battery settings</string>
+    <string name="step_4_description">Closing app through the task manager might block reminders.</string>
+    <string name="step_4_title">4. Don\'t force stop</string>
     <string name="suffix_day">d </string>
     <string name="suffix_month">mth </string>
     <string name="suffix_week">wk </string>

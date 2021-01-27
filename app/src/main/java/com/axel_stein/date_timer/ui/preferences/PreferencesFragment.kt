@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -43,6 +44,12 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         val theme = preferenceManager.findPreference<ListPreference>("theme")
         theme?.setOnPreferenceChangeListener { _, value ->
             settings.applyTheme(value as String)
+            true
+        }
+
+        val reminderTrouble = preferenceManager.findPreference<Preference>("reminder_trouble")
+        reminderTrouble?.setOnPreferenceClickListener {
+            findNavController().navigate(R.id.action_open_reminder_trouble)
             true
         }
 
