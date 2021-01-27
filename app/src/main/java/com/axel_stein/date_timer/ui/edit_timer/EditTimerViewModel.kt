@@ -123,9 +123,20 @@ class EditTimerViewModel(private val id: Long = 0L, state: SavedStateHandle) : V
             else -> {
                 Completable.fromAction {
                     val timer = timerData.get()
-                    timer.dateTime = timer.dateTime
-                        .withSecondOfMinute(0)
-                        .withMillisOfSecond(0)
+                    if (!timer.countDown) {  // stopwatch
+                        val now = DateTime.now().withSecondOfMinute(0)
+                            .withMillisOfSecond(0)
+                        val dt = timer.dateTime
+                            .withSecondOfMinute(0)
+                            .withMillisOfSecond(0)
+                        // if date_time is not equal to now
+                        // set timer's seconds and millis to zero
+                        if (now != dt) {
+                            timer.dateTime = dt
+                        } else {
+                            timer.dateTime = DateTime.now()
+                        }
+                    }
                     timer.completed = false
                     val id = dao.upsert(timer)
                     if (id != -1L) {
