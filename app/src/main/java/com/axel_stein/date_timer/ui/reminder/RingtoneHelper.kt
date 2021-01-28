@@ -2,7 +2,6 @@ package com.axel_stein.date_timer.ui.reminder
 
 import android.content.Context
 import android.content.Intent
-import android.media.RingtoneManager
 import android.media.RingtoneManager.*
 import android.net.Uri
 import com.axel_stein.date_timer.R
@@ -23,12 +22,14 @@ class RingtoneHelper(private val context: Context, private val settings: AppSett
     }
 
     fun getUri(): Uri {
-        val defaultRingtoneUri = RingtoneManager.getDefaultUri(TYPE_NOTIFICATION)
+        val defaultRingtoneUri = defaultUri()
         val prefRingtoneUri = settings.getRingtoneUri()
         if (prefRingtoneUri.isNotEmpty())
             return Uri.parse(prefRingtoneUri)
         return defaultRingtoneUri
     }
+
+    fun defaultUri() = getDefaultUri(TYPE_NOTIFICATION)
 
     fun update(data: Intent?) {
         if (data == null) return

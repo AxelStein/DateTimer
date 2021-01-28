@@ -30,29 +30,6 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/main_pref_category_notifications">
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="notification_ringtone"
-            app:title="@string/main_pref_ringtone"/>
-
-        <SwitchPreference
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-            app:key="notification_vibration"
-            app:title="@string/main_pref_notification_vibration"/>
-
-        <SwitchPreference
-            app:defaultValue="true"
-            app:iconSpaceReserved="false"
-            app:key="notification_led"
-            app:title="@string/main_pref_notification_led"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
         app:title="@string/main_pref_category_about_app">
 
         <Preference

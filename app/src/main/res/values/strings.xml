@@ -13,6 +13,7 @@
     <string name="action_sort_title">By title</string>
     <string name="app_name" translatable="false">Date Timer</string>
     <string name="app_version" translatable="false">1.0.2</string>
+    <string name="channel_name">Reminders</string>
     <string name="count_down">Countdown</string>
     <string name="description_pause">Pause</string>
     <string name="dialog_msg_delete_timer">Timer will be permanently deleted.</string>
@@ -27,7 +28,10 @@
     <string name="hint_title">Title</string>
     <string name="main_pref_app_version_title">Version</string>
     <string name="main_pref_category_about_app">About app</string>
+    <string name="main_pref_category_notifications">Notifications</string>
+    <string name="main_pref_category_reminders">Reminders</string>
     <string name="main_pref_notification_led">Led light</string>
+    <string name="main_pref_notification_vibration">Vibration</string>
     <string name="main_pref_rate_app">Rate app</string>
     <string name="main_pref_reminder_trouble">Reminder troubleshooting</string>
     <string name="main_pref_reminders_enabled">Enable reminders</string>

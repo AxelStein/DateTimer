@@ -47,6 +47,8 @@ class AppSettings(context: Context) {
 
     fun notificationLed() = prefs.getBoolean("notification_led", true)
 
+    fun notificationVibration() = prefs.getBoolean("notification_vibration", true)
+
     fun remindersEnabled() = prefs.getBoolean("reminders_enabled", true)
 
     fun getRingtoneUri(): String {

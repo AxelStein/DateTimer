@@ -8,7 +8,6 @@ import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.media.RingtoneManager
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.N
 import android.os.Build.VERSION_CODES.O
@@ -38,9 +37,9 @@ class AndroidNotificationTray(private val context: Context) {
 
     fun showNotification(title: String) {
         if (!settings.remindersEnabled()) return
-        createNotificationChannel()
         val id = title.hashCode()
         try {
+            createNotificationChannel()
             notify(id, buildNotification(title))
         } catch (e: Exception) {
             // Some Xiaomi phones produce a RuntimeException if custom notification sounds are used.
@@ -71,13 +70,16 @@ class AndroidNotificationTray(private val context: Context) {
             .setContentIntent(launchAppIntent())
         builder.setSound(
             if (defaultSound) {
-                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                ringtoneHelper.defaultUri()
             } else {
                 ringtoneHelper.getUri()
             }
         )
         if (settings.notificationLed()) {
             builder.setLights(Color.RED, 1000, 1000)
+        }
+        if (settings.notificationVibration()) {
+            builder.setVibrate(longArrayOf(500, 500, 500, 500, 500, 500, 500, 500))
         }
         return builder.build()
     }
@@ -97,8 +99,7 @@ class AndroidNotificationTray(private val context: Context) {
 
     private fun createNotificationChannel() {
         if (SDK_INT >= O) {
-            val mChannel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE_HIGH)
-            mChannel.description = CHANNEL_DESCRIPTION
+            val mChannel = NotificationChannel(CHANNEL_ID, context.getString(R.string.channel_name), IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(mChannel)
         }
     }
@@ -106,8 +107,6 @@ class AndroidNotificationTray(private val context: Context) {
     companion object {
         private const val APP_ID = "com.axel_stein.date_timer:"
         private const val CHANNEL_ID = APP_ID + "CHANNEL_ID"
-        private const val CHANNEL_NAME = "Reminders"
-        private const val CHANNEL_DESCRIPTION = "Date timer reminders"
         private const val GROUP_ID = APP_ID + "GROUP_ID"
     }
 }
