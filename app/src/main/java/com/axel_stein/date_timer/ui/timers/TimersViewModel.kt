@@ -16,13 +16,16 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers.io
 import org.joda.time.DateTime
 import javax.inject.Inject
+import kotlin.collections.set
 
 class TimersViewModel : ViewModel() {
     private lateinit var dao: TimerDao
     private val disposables = CompositeDisposable()
 
-    private val items = MutableLiveData<List<Timer>>()
-    val itemsLiveData: LiveData<List<Timer>> = items
+    private val items = MutableLiveData<MutableList<Timer>>()
+    val itemsLiveData: LiveData<MutableList<Timer>> = items
+
+    private val hiddenItems = mutableMapOf<Long, Timer>()
 
     private val showMessage = MutableLiveData<Event<Int>>()
     val showMessageLiveData: LiveData<Event<Int>> = showMessage
@@ -58,26 +61,31 @@ class TimersViewModel : ViewModel() {
     private fun loadItems() {
         val getItems = if (settings.showCompletedTimers()) dao.getAll() else dao.getNotCompleted()
         disposables.clear()
-        disposables.add(
-            getItems.subscribe({
-                val list = if (!settings.showPausedTimers()) {
-                    it.filter { item -> !item.paused }
-                } else {
-                    it
-                }
-                items.postValue(sortItems(list))
-            }, {
-                it.printStackTrace()
-                showMessage.postValue(Event(R.string.error_loading))
-            })
-        )
+
+        getItems.subscribe({
+            val list = if (!settings.showPausedTimers()) {
+                it.filter { item -> !item.paused }
+            } else {
+                it
+            }.filter { item ->
+                !hiddenItems.containsKey(item.id)
+            }
+            items.postValue(sortItems(list))
+        }, {
+            it.printStackTrace()
+            showMessage.postValue(Event(R.string.error_loading))
+        }).also {
+            disposables.add(it)
+        }
     }
 
-    private fun sortItems(list: List<Timer>): List<Timer> {
-        return when (settings.getTimersSort()) {
-            TITLE -> list.sortedBy { it.title }
-            DATE -> list.sortedByDescending { it.dateTime }
+    private fun sortItems(list: List<Timer>): MutableList<Timer> {
+        val ml = list.toMutableList()
+        when (settings.getTimersSort()) {
+            TITLE -> ml.sortBy { it.title }
+            DATE -> ml.sortByDescending { it.dateTime }
         }
+        return ml
     }
 
     @Inject
@@ -90,7 +98,7 @@ class TimersViewModel : ViewModel() {
     fun pauseTimer(timer: Timer) {
         val paused = !timer.paused
         val dt = if (paused) DateTime.now() else null
-        val d = dao.setPaused(timer.id, paused, dt)
+        dao.setPaused(timer.id, paused, dt)
             .subscribeOn(io())
             .subscribe({
                 val copy = timer.copy()
@@ -104,23 +112,77 @@ class TimersViewModel : ViewModel() {
             }, {
                 it.printStackTrace()
                 showMessage.postValue(Event(R.string.error))
-            })
-        disposables.add(d)
+            }).also {
+                disposables.add(it)
+            }
     }
 
     fun completeTimer(timer: Timer) {
         if (!timer.completed) {
-            val d = dao.setCompleted(timer.id, true)
+            dao.setCompleted(timer.id, true)
                 .subscribeOn(io())
                 .subscribe({}, {
                     it.printStackTrace()
                     showMessage.postValue(Event(R.string.error))
-                })
-            disposables.add(d)
+                }).also {
+                    disposables.add(it)
+                }
         }
     }
 
+    fun hideTimerById(id: Long) {
+        items.value?.let {
+            it.removeById(id)?.also { timer ->
+                hiddenItems[id] = timer
+            }
+        }
+    }
+
+    fun showTimerById(id: Long) {
+        if (hiddenItems.containsKey(id)) {
+            val timer = hiddenItems.remove(id)
+            if (timer != null) {
+                items.value?.let {
+                    it.add(timer)
+                    items.value = sortItems(it)
+                }
+            }
+        }
+    }
+
+    fun deleteTimerById(id: Long) {
+        dao.deleteById(id)
+            .subscribeOn(io())
+            .subscribe({
+                reminderScheduler.cancelById(id)
+                hiddenItems.remove(id)
+            }, {
+                it.printStackTrace()
+                showMessage.postValue(Event(R.string.error_deleting))
+            }).also {
+                disposables.add(it)
+            }
+    }
+
+    fun getTimerByPosition(position: Int): Timer? = items.value?.get(position)
+
     override fun onCleared() {
         disposables.clear()
+        hiddenItems.forEach {
+            deleteTimerById(it.key)
+        }
+        hiddenItems.clear()
+    }
+
+    private fun MutableList<Timer>.removeById(id: Long): Timer? {
+        val iterator = listIterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.id == id) {
+                iterator.remove()
+                return item
+            }
+        }
+        return null
     }
 }

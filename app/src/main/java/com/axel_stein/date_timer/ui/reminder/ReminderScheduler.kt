@@ -24,11 +24,17 @@ class ReminderScheduler(private val context: Context) {
         am.cancel(pendingIntent(timer))
     }
 
-    private fun pendingIntent(timer: Timer): PendingIntent {
+    fun cancelById(id: Long) {
+        am.cancel(pendingIntent(id))
+    }
+
+    private fun pendingIntent(timer: Timer) = pendingIntent(timer.id, timer.title)
+
+    private fun pendingIntent(id: Long, title: String = ""): PendingIntent {
         val intent = Intent(context, ReminderReceiver::class.java).apply {
             action = "com.axel_stein.date_timer.SHOW_REMINDER"
-            putExtra("title", timer.title)
+            putExtra("title", title)
         }
-        return PendingIntent.getBroadcast(context, timer.id.toInt(), intent, FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(context, id.toInt(), intent, FLAG_UPDATE_CURRENT)
     }
 }

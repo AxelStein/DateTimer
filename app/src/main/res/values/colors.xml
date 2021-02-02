@@ -8,4 +8,5 @@
     <color name="color_primary_dark_night">#151515</color>
     <color name="color_bg_night">#303030</color>
     <color name="color_accent_night">#448aff</color>
+    <color name="color_red">#F44336</color>
 </resources>

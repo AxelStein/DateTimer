@@ -5,12 +5,15 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.data.AppSettings
 import com.axel_stein.date_timer.databinding.FragmentTimersBinding
 import com.axel_stein.date_timer.ui.App
 import com.axel_stein.date_timer.utils.LinearLayoutManagerWrapper
+import com.axel_stein.date_timer.utils.SwipeCallback
 import com.axel_stein.date_timer.utils.setVisible
+import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 import javax.inject.Inject
@@ -37,6 +40,24 @@ class TimersFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManagerWrapper(context)
         binding.recyclerView.adapter = listAdapter
         binding.recyclerView.setHasFixedSize(true)
+
+        SwipeCallback(requireContext()).apply {
+            iconMargin = 16f
+            swipeRightEnabled = true
+            setSwipeRightColorRes(R.color.color_red)
+            setSwipeRightIconRes(R.drawable.icon_delete)
+            onSwipeRight = { position ->
+                val timer = viewModel.getTimerByPosition(position)
+                timer?.id?.let { id ->
+                    viewModel.hideTimerById(id)
+                    listAdapter.notifyItemRemoved(position)
+                    showTimerDeletedSnackbar(id)
+                }
+            }
+        }.also {
+            ItemTouchHelper(it).attachToRecyclerView(binding.recyclerView)
+        }
+
         listAdapter.onTimerClickListener = { timer ->
             findNavController().navigate(R.id.action_edit_timer, Bundle().apply {
                 putLong("id", timer.id)
@@ -49,6 +70,22 @@ class TimersFragment : Fragment() {
             viewModel.completeTimer(timer)
         }
         return binding.root
+    }
+
+    private fun showTimerDeletedSnackbar(id: Long) {
+        Snackbar.make(binding.recyclerView, R.string.msg_timer_deleted, LENGTH_SHORT)
+            .setAction(R.string.action_cancel) {
+                viewModel.showTimerById(id)
+                listAdapter.notifyDataSetChanged()
+            }
+            .addCallback(object : BaseCallback<Snackbar>() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    if (event != DISMISS_EVENT_ACTION) {
+                        viewModel.deleteTimerById(id)
+                    }
+                }
+            })
+            .show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
