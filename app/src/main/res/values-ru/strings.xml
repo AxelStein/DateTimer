@@ -26,6 +26,8 @@
     <string name="hint_title">Название</string>
     <string name="main_pref_app_version_title">Версия</string>
     <string name="main_pref_category_about_app">О приложении</string>
+    <string name="main_pref_category_notifications">Уведомления</string>
+    <string name="main_pref_category_reminders">Напоминания</string>
     <string name="main_pref_notification_led">Световой индикатор</string>
     <string name="main_pref_notification_vibration">Вибрация</string>
     <string name="main_pref_rate_app">Оценить приложение</string>
@@ -55,6 +57,4 @@
     <string name="theme_dark">Темная</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_system">Настройки системы</string>
-    <string name="main_pref_category_notifications">Уведомления</string>
-    <string name="main_pref_category_reminders">Напоминания</string>
 </resources>
