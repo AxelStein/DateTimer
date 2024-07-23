@@ -1,14 +1,32 @@
 package com.axel_stein.date_timer.ui.edit_timer
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.databinding.FragmentEditTimerBinding
 import com.axel_stein.date_timer.ui.dialogs.ConfirmDialog
-import com.axel_stein.date_timer.utils.*
+import com.axel_stein.date_timer.utils.formatDate
+import com.axel_stein.date_timer.utils.formatTime
+import com.axel_stein.date_timer.utils.setEditorText
+import com.axel_stein.date_timer.utils.setItemSelectedListener
+import com.axel_stein.date_timer.utils.setVisible
+import com.axel_stein.date_timer.utils.setupEditor
+import com.axel_stein.date_timer.utils.showDatePicker
+import com.axel_stein.date_timer.utils.showError
+import com.axel_stein.date_timer.utils.showTimePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 
@@ -16,6 +34,7 @@ class EditTimerFragment : Fragment(), ConfirmDialog.OnConfirmListener {
     private val viewModel: EditTimerViewModel by viewModels { EditTimerFactory(this, id) }
     private lateinit var binding: FragmentEditTimerBinding
     private var id = 0L
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { _ -> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +90,21 @@ class EditTimerFragment : Fragment(), ConfirmDialog.OnConfirmListener {
         viewModel.actionFinishLiveData.observe(viewLifecycleOwner, {
             findNavController().navigateUp()
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        checkNotificationPermission()
+    }
+
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return
+        }
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

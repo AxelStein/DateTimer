@@ -2,6 +2,7 @@ package com.axel_stein.date_timer.ui.reminder
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
@@ -35,6 +36,6 @@ class ReminderScheduler(private val context: Context) {
             action = "com.axel_stein.date_timer.SHOW_REMINDER"
             putExtra("title", title)
         }
-        return PendingIntent.getBroadcast(context, id.toInt(), intent, FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(context, id.toInt(), intent, FLAG_UPDATE_CURRENT or FLAG_MUTABLE)
     }
 }

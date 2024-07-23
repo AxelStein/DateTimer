@@ -47,13 +47,13 @@ data class Timer(
 
     override fun describeContents() = 0
 
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-        dest?.writeString(title)
-        dest?.writeInt(if (paused) 1 else 0)
-        dest?.writeInt(if (completed) 1 else 0)
-        dest?.writeInt(if (countDown) 1 else 0)
-        dest?.writeString(dateTime.toString())
-        dest?.writeString(pausedDateTime?.toString())
-        dest?.writeLong(id)
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(title)
+        dest.writeInt(if (paused) 1 else 0)
+        dest.writeInt(if (completed) 1 else 0)
+        dest.writeInt(if (countDown) 1 else 0)
+        dest.writeString(dateTime.toString())
+        dest.writeString(pausedDateTime?.toString())
+        dest.writeLong(id)
     }
 }

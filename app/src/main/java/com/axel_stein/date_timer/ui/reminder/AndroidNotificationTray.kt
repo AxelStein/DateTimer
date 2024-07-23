@@ -1,17 +1,21 @@
 package com.axel_stein.date_timer.ui.reminder
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.N
 import android.os.Build.VERSION_CODES.O
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.axel_stein.date_timer.R
@@ -53,6 +57,10 @@ class AndroidNotificationTray(private val context: Context) {
     }
 
     private fun notify(id: Int, notification: Notification) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+
         notificationManager.notify(id, notification)
         if (SDK_INT >= N) {
             notificationManager.notify(0, buildSummaryNotification())
@@ -86,7 +94,7 @@ class AndroidNotificationTray(private val context: Context) {
 
     private fun launchAppIntent(): PendingIntent {
         val intent = Intent(context, MainActivity::class.java)
-        return PendingIntent.getActivity(context, 0, intent, FLAG_UPDATE_CURRENT)
+        return PendingIntent.getActivity(context, 0, intent, FLAG_UPDATE_CURRENT or FLAG_MUTABLE)
     }
 
     private fun buildSummaryNotification(): Notification {
