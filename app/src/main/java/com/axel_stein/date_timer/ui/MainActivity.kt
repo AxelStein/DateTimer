@@ -9,6 +9,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.axel_stein.date_timer.R
 import com.axel_stein.date_timer.databinding.ActivityMainBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -25,6 +27,10 @@ class MainActivity : AppCompatActivity() {
             navController.navigateUp()
         }
         NavigationUI.setupActionBarWithNavController(this, navController)
+
+        MobileAds.initialize(this)
+
+        binding.adView?.loadAd(AdRequest.Builder().build())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

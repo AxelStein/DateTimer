@@ -26,8 +26,8 @@ class EditTimerViewModel(private val id: Long = 0L, state: SavedStateHandle) : V
     private val errorTitleEmpty = MutableLiveData<Boolean>()
     val errorTitleEmptyLiveData: LiveData<Boolean> = errorTitleEmpty
 
-    private val errorDateTime = MutableLiveData<Int>()
-    val errorDateTimeLiveData: LiveData<Int> = errorDateTime
+    private val errorDateTime = MutableLiveData<Int?>()
+    val errorDateTimeLiveData: LiveData<Int?> = errorDateTime
 
     private val showMessage = MutableLiveData<Event<Int>>()
     val showMessageLiveData: LiveData<Event<Int>> = showMessage

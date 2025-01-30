@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace "com.axel_stein.date_timer"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode 6
         versionName "1.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -70,6 +70,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.work:work-runtime-ktx:2.9.0"
     implementation "androidx.work:work-rxjava2:2.9.0"
+
+    implementation "com.google.guava:guava:31.0.1-android"
+
+    implementation "com.google.android.gms:play-services-ads:23.6.0"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
