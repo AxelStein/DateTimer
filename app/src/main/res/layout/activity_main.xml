@@ -20,6 +20,16 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.DateTimer.PopupOverlay" />
 
+        <TextView
+            android:id="@+id/adProposal"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:text="@string/disable_ads"
+            android:background="#eee"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -40,6 +50,7 @@
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:id="@+id/adDivider"
             app:dividerColor="#eee"
             android:layout_marginTop="8dp"/>
 

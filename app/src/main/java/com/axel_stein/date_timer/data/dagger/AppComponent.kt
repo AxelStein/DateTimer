@@ -1,5 +1,6 @@
 package com.axel_stein.date_timer.data.dagger
 
+import com.axel_stein.date_timer.ui.MainActivity
 import com.axel_stein.date_timer.ui.edit_timer.EditTimerViewModel
 import com.axel_stein.date_timer.ui.preferences.PreferencesFragment
 import com.axel_stein.date_timer.ui.reminder.AndroidNotificationTray
@@ -16,4 +17,5 @@ interface AppComponent {
     fun inject(fragment: TimersFragment)
     fun inject(notificationTray: AndroidNotificationTray)
     fun inject(fragment: PreferencesFragment)
+    fun inject(fragment: MainActivity)
 }

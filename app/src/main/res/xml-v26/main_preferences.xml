@@ -12,6 +12,23 @@
         app:title="@string/main_pref_theme"/>
 
     <PreferenceCategory
+        app:key="purchases_category"
+        app:iconSpaceReserved="false"
+        app:title="@string/purchases">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:title="@string/disable_ads"
+            app:key="disable_ads"/>
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:title="@string/restore_purchases"
+            app:key="restore_purchases"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/main_pref_category_reminders">
 

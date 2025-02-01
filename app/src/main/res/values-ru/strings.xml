@@ -50,11 +50,16 @@
     <string name="step_3_title">3. Настройте дополнительные параметры батареи</string>
     <string name="step_4_description">Закрытие приложения с помощью диспетчера задач может блокировать напоминания.</string>
     <string name="step_4_title">4. Не останавливайте приложение принудительно</string>
-    <string name="suffix_day">д </string>
-    <string name="suffix_month">мес </string>
-    <string name="suffix_week">нед </string>
-    <string name="suffix_year">г </string>
+    <string name="suffix_day">д</string>
+    <string name="suffix_month">мес</string>
+    <string name="suffix_week">нед</string>
+    <string name="suffix_year">г</string>
     <string name="theme_dark">Темная</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_system">Настройки системы</string>
+    <string name="disable_ads">Отключить рекламу</string>
+    <string name="restore_purchases">Восстановить покупки</string>
+    <string name="purchases">Покупки</string>
+    <string name="ads_disabled">Реклама отключена</string>
+    <string name="no_purchases_found">Покупки не найдены</string>
 </resources>

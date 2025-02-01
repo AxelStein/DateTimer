@@ -61,6 +61,18 @@ class AppSettings(context: Context) {
         prefs.edit().putString("ringtone_uri", uri?.toString() ?: defaultRingtoneUri).apply()
     }
 
+    fun setAdsEnabled(enabled: Boolean) {
+        prefs.edit().putBoolean("ads_enabled", enabled).commit()
+    }
+
+    fun isAdsEnabled() = prefs.getBoolean("ads_enabled", true)
+
+    fun setAdProposalVisible(enabled: Boolean) {
+        prefs.edit().putBoolean("ad_proposal_visible", enabled).commit()
+    }
+
+    fun isAdProposalVisible() = prefs.getBoolean("ad_proposal_visible", true)
+
     enum class TimersSort {
         TITLE,
         DATE
