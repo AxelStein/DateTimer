@@ -14,6 +14,7 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ConsumeParams
 import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
@@ -190,7 +191,16 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             .setListener { billingResult, purchases ->
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     if (purchases != null && !purchases.isEmpty()) {
-                        hideAds()
+                        val consumeParams = ConsumeParams.newBuilder()
+                            .setPurchaseToken(purchases.first().purchaseToken)
+                            .build()
+                        billingClient?.consumeAsync(consumeParams) { result, token ->
+                            if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                                hideAds()
+                            } else {
+                                showMessage(result.debugMessage)
+                            }
+                        }
                     }
                 } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
                     // Handle an error caused by a user canceling the purchase flow.
