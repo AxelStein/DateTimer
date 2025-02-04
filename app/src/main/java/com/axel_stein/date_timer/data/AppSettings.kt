@@ -9,10 +9,24 @@ import com.axel_stein.date_timer.data.AppSettings.TimersSort.DATE
 import com.axel_stein.date_timer.data.AppSettings.TimersSort.TITLE
 
 class AppSettings(context: Context) {
+
+    interface OnEnableAdsListener {
+        fun onEnableAds(enabled: Boolean)
+    }
+
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+    private val enableAdsListeners = HashSet<OnEnableAdsListener>()
 
     init {
         applyTheme(prefs.getString("theme", "system") ?: "system")
+    }
+
+    fun addEnableAdsListener(listener: OnEnableAdsListener) {
+        enableAdsListeners.add(listener)
+    }
+
+    fun removeEnableAdsListener(listener: OnEnableAdsListener) {
+        enableAdsListeners.remove(listener)
     }
 
     fun applyTheme(theme: String) {
@@ -63,6 +77,9 @@ class AppSettings(context: Context) {
 
     fun setAdsEnabled(enabled: Boolean) {
         prefs.edit().putBoolean("ads_enabled", enabled).commit()
+        for (listener in enableAdsListeners) {
+            listener.onEnableAds(enabled)
+        }
     }
 
     fun isAdsEnabled() = prefs.getBoolean("ads_enabled", true)

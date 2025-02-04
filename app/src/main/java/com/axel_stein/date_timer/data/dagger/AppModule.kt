@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.axel_stein.date_timer.data.AppSettings
 import com.axel_stein.date_timer.data.room.AppDatabase
 import com.axel_stein.date_timer.data.room.migrate_1_2
+import com.axel_stein.date_timer.ui.BillingManager
 import com.axel_stein.date_timer.ui.reminder.ReminderScheduler
 import com.axel_stein.date_timer.ui.reminder.RingtoneHelper
 import dagger.Module
@@ -34,4 +35,8 @@ class AppModule(private val context: Context) {
 
     @Provides
     fun provideRingtoneHelper(settings: AppSettings) = RingtoneHelper(context, settings)
+
+    @Provides
+    @Singleton
+    fun provideBillingManager(settings: AppSettings) = BillingManager(context, settings)
 }
