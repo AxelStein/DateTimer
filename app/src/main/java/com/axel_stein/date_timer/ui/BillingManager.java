@@ -36,7 +36,7 @@ public class BillingManager implements PurchasesUpdatedListener, BillingClientSt
     public static final String PRODUCT_DISABLE_ADS = "disable_ads";
 
     private final Context context;
-    private BillingClient billingClient;
+    private @Nullable BillingClient billingClient;
     private final ArrayList<ProductDetails> availableProducts = new ArrayList<>();
     private final ArrayList<Purchase> purchases = new ArrayList<>();
     private final AppSettings settings;
@@ -61,9 +61,11 @@ public class BillingManager implements PurchasesUpdatedListener, BillingClientSt
     }
 
     public void onStop() {
-        Timber.d("endConnection");
-        billingClient.endConnection();
-        billingClient = null;
+        if (billingClient != null) {
+            Timber.d("endConnection");
+            billingClient.endConnection();
+            billingClient = null;
+        }
     }
 
     public void onStart() {
@@ -75,6 +77,8 @@ public class BillingManager implements PurchasesUpdatedListener, BillingClientSt
     }
 
     private void queryPurchases() {
+        if (billingClient == null) return;
+
         billingClient.queryPurchasesAsync(
             QueryPurchasesParams
                 .newBuilder()
@@ -85,6 +89,8 @@ public class BillingManager implements PurchasesUpdatedListener, BillingClientSt
     }
 
     private void queryProducts() {
+        if (billingClient == null) return;
+
         Timber.d("queryProducts");
         ArrayList<QueryProductDetailsParams.Product> products = new ArrayList<>();
         products.add(
@@ -118,6 +124,8 @@ public class BillingManager implements PurchasesUpdatedListener, BillingClientSt
     }
 
     public void revoke(@NonNull String productId) {
+        if (billingClient == null) return;
+
         Purchase current = null;
         for (Purchase purchase : purchases) {
             List<String> products = purchase.getProducts();
@@ -143,6 +151,8 @@ public class BillingManager implements PurchasesUpdatedListener, BillingClientSt
 
     @Nullable
     public BillingResult purchase(@NonNull Activity activity, @NonNull String productId) {
+        if (billingClient == null) return null;
+
         ProductDetails product = null;
         for (ProductDetails p : availableProducts) {
             if (TextUtils.equals(productId, p.getProductId())) {
@@ -201,6 +211,8 @@ public class BillingManager implements PurchasesUpdatedListener, BillingClientSt
     }
 
     private void acknowledgePurchase(String token) {
+        if (billingClient == null) return;
+
         AcknowledgePurchaseParams params = AcknowledgePurchaseParams.newBuilder()
             .setPurchaseToken(token)
             .build();
