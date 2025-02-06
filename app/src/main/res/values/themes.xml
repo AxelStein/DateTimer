@@ -7,6 +7,7 @@
         <item name="android:windowBackground">@color/color_bg_day</item>
         <item name="android:navigationBarColor">@color/color_bg_day</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 
     <style name="Theme.DateTimer.NoActionBar">
